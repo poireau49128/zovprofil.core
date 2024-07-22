@@ -1,0 +1,56 @@
+﻿@model List<Product>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Type</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int c = 1;
+            }
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@c</td>
+                    @{
+                        c += 1;
+                    }
+                    <td>@product.ImageId</td>
+                    <td>@product.Name</td>
+                    <td>@product.Color</td>
+                    <td>@product.ProductType</td>
+                    <td>@product.Category</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
