@@ -9,13 +9,15 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ProductDbContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductDb")));
+builder.Services.AddDbContext<MarketingDbContext>(
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("MarketingDb")));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Catalog/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -29,6 +31,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Catalog}/{action=GetProducts}/{id?}");
+    pattern: "{controller=Catalog}/{action=Production}/{id?}");
 
 app.Run();

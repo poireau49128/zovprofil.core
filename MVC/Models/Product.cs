@@ -23,7 +23,8 @@ namespace MVC.Models
         public string? Sizes { get; set; }
         public string? Material { get; set; }
         public bool? Basic { get; set; }
-    }
+		public bool? Latest { get; set; }
+	}
 
     public class ClientsCatalogFrontsConfig
     {

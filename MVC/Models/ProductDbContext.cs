@@ -9,8 +9,9 @@ namespace MVC.Models
         }
 
         public DbSet<Product> Products { get; set; }
+		public DbSet<New> News { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Определите конфигурацию для моделей, если необходимо
             // Например, modelBuilder.Entity<Product>().ToTable("ClientCatalogImages");

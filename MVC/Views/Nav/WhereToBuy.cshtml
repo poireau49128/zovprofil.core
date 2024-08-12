@@ -1,0 +1,181 @@
+﻿@model MVC.Models.DealersListViewModel
+<link href="~/css/where.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Каталог дилеров";
+}
+
+
+<div class="wrapper">
+    <div class="filter">
+        <form id="filterForm" method="get">
+            <div class="filter-block">
+                @Html.DropDownList("country", Model.Country as SelectList,
+                         htmlAttributes: new { @class = "custom-dropdown", onchange = "submitForm()" })
+
+                @Html.DropDownList("city", Model.City as SelectList,
+                         htmlAttributes: new { @class = "custom-dropdown", onchange = "submitForm()" })
+            </div>
+
+            <div class="filter-block">
+                <div>
+                    @Html.CheckBox("isFurniture", false, new { @onchange = "submitForm()" })
+                    <label class="control-label">Мебель </label>
+                </div>
+
+                <div>
+                    @Html.CheckBox("isProfile", false, new { @onchange = "submitForm()" })
+                    <label class="control-label">Погонаж </label>
+                </div>
+
+                <div>
+                    @Html.CheckBox("isFronts", false, new { @onchange = "submitForm()" })
+                    <label class="control-label">Фасады </label>
+                </div>
+            </div>
+        </form>
+        <div class="dealers">
+            
+                @foreach (var dealer in Model.Dealers)
+                {
+                <div class="dealer-block" onclick="openPopup('@dealer.Name', '@dealer.Address', '@dealer.Phone',
+                                                             '@dealer.Site', '@dealer.Email', '@dealer.Worktime',
+                                                             '@dealer.isFronts', '@dealer.isProfile', '@dealer.isFurniture')">
+                        <p style="font-weight:600">@dealer.Name</p>
+                        <p>@dealer.Address</p>
+                    </div>
+                }
+            
+        </div>
+    </div>
+
+
+    <div id="map"></div>
+</div>
+
+
+
+
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <h1 id="popup-name" style="text-align: center;"></h1>
+        <div class="popup-block">
+            <div class="popup-address" style="text-align: center;">
+                <h3 class="popup-block-title">Адрес</h3>
+                <p id="popup-block-address"></p>
+            </div>
+            <div class="popup-contacts" style="text-align: center;">
+                <h3 class="popup-block-title">Контакты</h3>
+                <p id="popup-block-phone"></p>
+                <a id="popup-block-site" href="" target="_blank"></a><br />
+                <a id="popup-block-email" href=""></a>
+            </div>
+            <div class="popup-hours" style="text-align: center;">
+                <h3 class="popup-block-title">Часы работы</h3>
+                <p id="popup-block-hours"></p>
+            </div>
+            <div class="popup-production" style="text-align: center;">
+                <h3 class="popup-block-title">Виды продукции</h3>
+                <div id="popup-block-production"></div>
+            </div>
+        </div>
+        <button class="button-shop" style="margin: auto; width: 150px;" onclick="closePopup()">Закрыть</button>
+    </div>
+</div>
+
+
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=821aa447-601e-4347-adcf-c9cd57007032&lang=ru_RU" type="text/javascript"></script>
+<script type="text/javascript">
+    ymaps.ready(init);
+
+    function init() {
+        var myMap = new ymaps.Map("map", {
+            center: [53.14, 29.23],
+            zoom: 10,
+            controls: []
+        }, {
+            searchControlProvider: 'yandex#search'
+        });
+
+        var dealers = @Html.Raw(Json.Serialize(Model.Dealers));
+        var bounds = calculateBounds(dealers);
+
+        dealers.forEach(function (dealer) {
+            var coords = [dealer.lat, dealer.long];
+
+            var placemark = new ymaps.Placemark(coords, {
+                preset: 'islands#redSportIcon'
+            });
+
+            placemark.events.add('click', function () {
+                openPopup(dealer.name, dealer.address, dealer.phone,
+                    dealer.site, dealer.email, dealer.worktime,
+                    dealer.isFronts, dealer.isProfile, dealer.isFurniture)
+            });
+
+            myMap.geoObjects.add(placemark);
+        });
+
+        myMap.setBounds(bounds, {
+            checkZoomRange: true
+        });
+    }
+
+    function calculateBounds(dealers) {
+        var minX = Number.MAX_VALUE;
+        var minY = Number.MAX_VALUE;
+        var maxX = Number.MIN_VALUE;
+        var maxY = Number.MIN_VALUE;
+
+        dealers.forEach(function (dealer) {
+            var coords = [dealer.lat, dealer.long];
+            minX = Math.min(minX, coords[0]);
+            minY = Math.min(minY, coords[1]);
+            maxX = Math.max(maxX, coords[0]);
+            maxY = Math.max(maxY, coords[1]);
+        });
+
+        return [[minX, minY], [maxX, maxY]];
+    }
+
+    function submitForm() {
+        document.getElementById("filterForm").submit();
+    }
+
+
+    function openPopup(name, address, phone, site, email, hours, isFronts, isProfile, isFurniture) {
+        document.getElementById("popup-name").textContent = name;
+        document.getElementById("popup-block-address").textContent = address;
+        document.getElementById("popup-block-phone").textContent = phone;
+        document.getElementById("popup-block-site").href = site;
+        document.getElementById("popup-block-site").textContent = site;
+        document.getElementById("popup-block-email").href = "mailto:" + email;
+        document.getElementById("popup-block-email").textContent = email;
+        document.getElementById("popup-block-hours").textContent = hours;
+
+        document.getElementById('popup-block-production').innerHTML = '';
+        if (isFronts) {
+            appendProduct("Фасады");
+        }
+        if (isProfile) {
+            appendProduct("Погонаж");
+        }
+        if (isFurniture) {
+            appendProduct("Мебель");
+        }
+
+        document.getElementById("popup").style.display = "block";
+    }
+
+    function appendProduct(productName) {
+        var p = document.createElement("p");
+        p.innerText = " - " + productName;
+        document.getElementById('popup-block-production').appendChild(p);
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+</script>

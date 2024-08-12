@@ -1,15 +1,21 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MVC.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"]</title>
+    @* <link rel="stylesheet" href="~/css/layout.css asp-append-version="true" /> *@
+    <link href="~/css/layout.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="~/js/burger.js"></script>
+	
 </head>
 <body>
-    <header>
+    @* <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MVC</a>
@@ -29,21 +35,191 @@
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container">
+    </header> *@
+
+
+
+
+
+
+
+	<header>
+		<div class="container">
+			<div class="header-top">
+				<div class="logo">
+					<img src="~/img/mainlogo.png" alt="" />
+				</div>
+
+				<div class="facebook">
+					<a style="display: flex" target="_blank" href="https://www.facebook.com/%D0%A1-%D0%9E%D0%9E%D0%9E-%D0%97%D0%9E%D0%92-%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C-150153668848633/">
+						<img src="~/img/facebook.svg" alt="" />
+					</a>
+				</div>
+				<div class="instagram">
+					<a style="display: flex" target="_blank" href="https://www.instagram.com/omcprofil.by/">
+						<img src="~/img/instagram.svg" alt="" />
+					</a>
+				</div>
+				<div class="telegram">
+					<a style="display: flex" target="_blank" href="https://t.me/OMC_Profil">
+						<img src="~/img/telegram.svg" alt="" />
+					</a>
+				</div>
+				<div class="number">
+					<img src="~/img/whatsapp.svg" alt="" />
+					<div style="margin: auto;">+375 (152) 60-81-63</div>
+				</div>
+
+				<a href="http://www.wm-shop.by/" onclick="ymetr()" target="_blank">
+					<div class="button-shop">
+						<img src="~/img/cart.png" alt="" />
+						<div style="margin: auto;">ИНТЕРНЕТ-МАГАЗИН</div>
+					</div>
+				</a>
+
+				<div class="button-contact" id="button-contact" onclick="showModal()">
+					<img src="~/img/letter.png" alt="" />
+					<div style="margin: auto;">НАПИСАТЬ</div>
+				</div>
+
+
+				<div class="header-burger">
+					<span></span>
+				</div>
+
+				<div class="menu-overlay">
+					<div class="menu">
+						<ul>
+							<li class="menu-mobile"><a href="/News">Новости</a></li>
+							<li class="menu-tablet"><a href="/About">О компании</a></li>
+							<li class="menu-tablet"><a href="/Contacts">Контакты</a></li>
+							<li class="but menu-buttons">
+								<a href="http://www.wm-shop.by/" onclick="ymetr()" target="_blank" style="display: flex; flex-direction: row;">
+									<img src="~/img/cart.png" alt="" />
+									<div style="color: white">ИНТЕРНЕТ-МАГАЗИН</div>
+								</a>
+							</li>
+							<li class="but menu-buttons" onclick="showModal()">
+								<img src="~/img/letter.png" alt="" />
+								<div style="color: white;">НАПИСАТЬ</div>
+							</li>
+							<li><a href="#">+375 (152) 60-81-63</a></li>
+							<li>
+								<a target="_blank" href="https://www.facebook.com/%D0%A1-%D0%9E%D0%9E%D0%9E-%D0%97%D0%9E%D0%92-%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C-150153668848633/">
+									<img src="~/img/facebook.svg" alt="" />
+								</a>
+								<a target="_blank" href="https://www.instagram.com/omcprofil.by/">
+									<img src="~/img/instagram.svg" alt="" />
+								</a>
+								<a target="_blank" href="https://t.me/OMC_Profil">
+									<img src="~/img/telegram.svg" alt="" />
+								</a>
+								<a href="#">
+									<img src="~/img/whatsapp.svg" alt="" />
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="menu">
+				<a href="@Url.Action("Main", "Nav")" class="item">
+					<div class="nav-main" runat="server">Главная</div>
+				</a>
+				<a href="@Url.Action("Production", "Nav")" class="item">
+					<div class="nav-catalog" runat="server">Каталог</div>
+				</a>
+				<a href="@Url.Action("News", "Nav")" class="item mobile">
+					<div class="nav-news" runat="server">Новости</div>
+				</a>
+				<a href="@Url.Action("WhereToBuy", "Nav")" class="item">
+					<div class="nav-wheretobuy" runat="server">Где купить</div>
+				</a>
+				<a href="@Url.Action("Downloads", "Nav")" class="item">
+					<div class="nav-clients" runat="server">Клиентам</div>
+				</a>
+				<a href="@Url.Action("About", "Nav")" class="item tablet mobile">
+					<div class="nav-about" runat="server">О компании</div>
+				</a>
+				<a href="@Url.Action("Contacts", "Nav")" class="item tablet mobile">
+					<div class="nav-contacts" runat="server">Контакты</div>
+				</a>
+			</div>
+		</div>
+	</header>
+
+
+
+
+
+
+
+
+
+
+
+
+    @* <div class="container"> *@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
+    @* </div> *@
 
-    <footer class="border-top footer text-muted">
+    <footer>
         <div class="container">
-            &copy; 2024 - MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer">
+                <div class="links">
+                    <ul>
+						<li><a href="@Url.Action("Main", "Nav")">Главная</a></li>
+						<li><a href="@Url.Action("Contacts", "Nav")s">Контакты</a></li>
+						<li><a href="@Url.Action("Wheretobuy", "Nav")">Где купить</a></li>
+                    </ul>
+                </div>
+                <div class="social">
+                    <span>Мы в соцсетях:</span>
+                    <div class="soc">
+                        <a target="_blank" href="https://www.facebook.com/%D0%A1-%D0%9E%D0%9E%D0%9E-%D0%97%D0%9E%D0%92-%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C-150153668848633/"><img src="~/img/facebook.svg" alt=""></a>
+                        <a target="_blank" href="https://www.instagram.com/omcprofil.by/"><img src="~/img/instagram.svg" alt=""></a>
+                        <a target="_blank" href="https://t.me/OMC_Profil"><img src="~/img/telegram.svg" alt=""></a>
+                    </div>
+                </div>
+                <div class="copyright">2017-2024 © ООО "ОМЦ-Профиль"</div>
+                <div></div>
+                <div class="address">
+                    <span>Адрес фабрики и склада</span>
+                    <span>ул. Герасимовича, 1-3</span>
+                    <span>230011 г. Гродно</span>
+                    <span>Республика Беларусь</span>
+                </div>
+            </div>
         </div>
     </footer>
+
+
+	<script>
+
+	</script>
+
+
+	<script>
+		function hideModal() {
+			var modal = document.getElementById("MessageDialogModal");
+			modal.style.display = "none";
+		}
+	function showModal() {
+		var modal = document.getElementById("MessageDialogModal");
+		modal.style.display = "block";
+
+		$('.header-burger, .menu-overlay').removeClass('active');
+		}
+	</script>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

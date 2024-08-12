@@ -1,0 +1,263 @@
+﻿@model List<Product>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="stylesheet" href="~/css/main.css" />
+
+<div class="swiper swiper-main" rewind="true">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide">
+			<div class="block">
+				<div class="sub-block">
+					<div class="sub-content">
+						<h1>Фасады</h1>
+						<div class="text">
+							Мебельные фасады для кухонь, гостиных, гардеробов и другой корпусной мебели
+						</div>
+						<button><a href="/Production?type=0" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+				<div class="image">
+					<img src="~/img/fronts.jpg" alt="" />
+					<div class="sub-block">
+						<h1>Фасады</h1>
+						<div class="text">
+							Мебельные фасады для кухонь, гостиных,<br> гардеробов и другой корпусной мебели
+						</div>
+						<button><a href="/Production?type=0" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-slide">
+			<div class="block">
+				<div class="sub-block">
+					<div class="sub-content">
+						<h1>Интерьерные декоры</h1>
+						<div class="text">
+							Декоративные рейки в интерьере - современный прием для отделки стен и зонирования
+						</div>
+						<button><a href="/Production?type=5" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+				<div class="image">
+					<img src="~/img/decors.jpg" alt="" />
+					<div class="sub-block">
+						<h1>Интерьерные декоры</h1>
+						<div class="text">
+							Декоративные рейки в интерьере -<br> современный прием для отделки стен и зонирования
+						</div>
+						<button><a href="/Production?type=5" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-slide">
+			<div class="block">
+				<div class="sub-block">
+					<div class="sub-content">
+						<h1>Декор и погонаж</h1>
+						<div class="text">
+							Декоротивные элементы придают кухне особенный индивидуальный вид.
+						</div>
+						<button><a href="/Production?type=1" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+				<div class="image">
+					<img src="~/img/pogon.jpg" alt="" />
+					<div class="sub-block">
+						<h1>Декор и погонаж</h1>
+						<div class="text">
+							Декоротивные элементы придают кухне <br> особенный индивидуальный вид.
+						</div>
+						<button><a href="/Production?type=1" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-slide">
+			<div class="block">
+				<div class="sub-block">
+					<div class="sub-content">
+						<h1>Мебель</h1>
+						<div class="text">
+							В нашем каталоге мебели можно выбрать как классические модели гостиных и стенок, так и ультра современные комплекты.
+						</div>
+						<button><a href="/Production?type=2" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+				<div class="image">
+					<img src="~/img/furniture.png" alt="" />
+					<div class="sub-block">
+						<h1>Мебель</h1>
+						<div class="text">
+							В нашем каталоге мебели можно выбрать как классические модели <br> гостиных и стенок, так и ультра современные комплекты.
+						</div>
+						<button><a href="/Production?type=2" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="swiper-scrollbar"></div>
+</div>
+
+
+<div class="container">
+	<h1 class="h1-header">ФАСАДЫ РАМОЧНЫЕ И ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ ДЛЯ МЕБЕЛИ И ИНТЕРЬЕРА</h1>
+	<div class="categories">
+		<div class="category">
+			<a href="/Production?type=0">
+				<div class="cat-image">
+					<img src="~/img/fronts.jpg" alt="" />
+				</div>
+				<h3>Фасады</h3>
+			</a>
+		</div>
+		<div class="category">
+			<a href="/Production?type=5">
+				<div class="cat-image">
+					<img src="~/img/decors.jpg" alt="" />
+				</div>
+				<h3>Интерьерные декоры</h3>
+			</a>
+		</div>
+		<div class="category">
+			<a href="/Production?type=1">
+				<div class="cat-image">
+					<img src="~/img/pogon.jpg" alt="" />
+				</div>
+				<h3>Погонаж</h3>
+			</a>
+		</div>
+		<div class="category">
+			<a href="/Production?type=2">
+				<div class="cat-image">
+					<img src="~/img/furniture.png" alt="" />
+				</div>
+				<h3>Мебель</h3>
+			</a>
+		</div>
+		<div class="not_available category">
+			<a href="/">
+				<div class="cat-image">
+					<img src="~/img/dec-elements.jpg" alt="" />
+				</div>
+				<h3>Декор элементы</h3>
+			</a>
+		</div>
+		<div class="not_available category">
+			<a href="/">
+				<div class="cat-image">
+					<img src="~/img/plintus.jpeg" alt="" />
+				</div>
+				<h3>Плинтуса и наличники</h3>
+			</a>
+		</div>
+	</div>
+
+
+
+	<h1 class="h1-header">О НАС</h1>
+	<div class="about">
+		<div class="no-swiper">
+			<div class="about-block">
+				<div class="about-text">Вот уже <b>более 20</b> лет ООО «ОМЦ-Профиль» работает в мебельной индустрии и создаёт широкий ассортимент мебельных фасадов и декоративных элементов: багетов, балюстрад, пилястр, плинтусов. Наши изделия широко применяются для производства кухонной мебели, но с таким же успехом могут применятся для изготовления гардеробов, шкафов и тумб для любых жилых помещений. </div>
+				<div class="about-image">
+					<img src="~/img/about-1.jpg" alt="" />
+					<div class="about-text">Вот уже <b>более 20</b> лет ООО «ОМЦ-Профиль» работает в мебельной индустрии и создаёт широкий ассортимент мебельных фасадов и декоративных элементов: багетов, балюстрад, пилястр, плинтусов. Наши изделия широко применяются для производства кухонной мебели, но с таким же успехом могут применятся для изготовления гардеробов, шкафов и тумб для любых жилых помещений. </div>
+				</div>
+			</div>
+			<div class="about-block">
+				<div class="about-image">
+					<img src="~/img/about-2.jpg" alt="" />
+					<div class="about-text">Мы также выпускаем изделия для оформления интерьера: декоративную рейку, реечные панели, плинтуса, консоли, багеты, наличники. Начиная с 2015 года, компания производит корпусную мебель для гостиной и спальни. Мы с уверенностью заявляем, что наша фабрика - <b>один из лидеров в РБ</b> по производству профиля из МДФ.</div>
+				</div>
+				<div class="about-text">Мы также выпускаем изделия для оформления интерьера: декоративную рейку, реечные панели, плинтуса, консоли, багеты, наличники. Начиная с 2015 года, компания производит корпусную мебель для гостиной и спальни. Мы с уверенностью заявляем, что наша фабрика - <b>один из лидеров в РБ</b> по производству профиля из МДФ.</div>
+			</div>
+			<div class="about-block">
+				<div class="about-text">Наши производственные цеха оборудованы <b>современным высокотехнологичным оборудованием лучших</b> немецких и итальянских брендов. Для облицовывания мы используем только немецкие клея и облицовочные материалы немецкого и японского производства. Что позволяет добиться <b>высокого качества</b> выпускаемой продукции. И <b>гарантировать</b> покупателю отличные эксплуатационные характеристики нашей продукции.</div>
+				<div class="about-image">
+					<img src="~/img/about-3.png" alt="" />
+					<div class="about-text">Наши производственные цеха оборудованы <b>современным высокотехнологичным оборудованием лучших</b> немецких и итальянских брендов. Для облицовывания мы используем только немецкие клея и облицовочные материалы немецкого и японского производства. Что позволяет добиться <b>высокого качества</b> выпускаемой продукции. И <b>гарантировать</b> покупателю отличные эксплуатационные характеристики нашей продукции.</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="swiper swiper-main" rewind="true">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<div class="about-image">
+						<img src="~/img/about-1.jpg" alt="" />
+						<div class="about-text">Вот уже <b>более 20</b> лет ООО «ОМЦ-Профиль» работает в мебельной индустрии и создаёт широкий ассортимент мебельных фасадов и декоративных элементов: багетов, балюстрад, пилястр, плинтусов. Наши изделия широко применяются для производства кухонной мебели, но с таким же успехом могут применятся для изготовления гардеробов, шкафов и тумб для любых жилых помещений. </div>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="about-image">
+						<img src="~/img/about-2.jpg" alt="" />
+						<div class="about-text">Мы также выпускаем изделия для оформления интерьера: декоративную рейку, реечные панели, плинтуса, консоли, багеты, наличники. Начиная с 2015 года, компания производит корпусную мебель для гостиной и спальни. Мы с уверенностью заявляем, что наша фабрика - <b>один из лидеров в РБ</b> по производству профиля из МДФ.</div>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="about-image">
+						<img src="~/img/about-3.png" alt="" />
+						<div class="about-text">Наши производственные цеха оборудованы <b>современным высокотехнологичным оборудованием лучших</b> немецких и итальянских брендов. Для облицовывания мы используем только немецкие клея и облицовочные материалы немецкого и японского производства. Что позволяет добиться <b>высокого качества</b> выпускаемой продукции. И <b>гарантировать</b> покупателю отличные эксплуатационные характеристики нашей продукции.</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="swiper-scrollbar"></div>
+		</div>
+
+		<div style="margin-top: 40px; margin-left: 15px; margin-right: 15px; text-align: center;">
+			Наши фасады, профиль и декоративные элементы можно купить в Гродно, Минске, Бресте, Гомеле, Витебске, Могилеве и других городах Беларуси. Мы поставляем нашу продукцию в Россию, Казахстан, Грузию и другие страны СНГ.
+		</div>
+	</div>
+
+	<h1 class="h1-header">НАШИ НАДЕЖНЫЕ ПОСТАВЩИКИ</h1>
+	<div class="suppliers">
+		<div style="text-align: center;">
+			Наша компания эффективно сотрудничает с некоторыми всемирно известными производителями
+		</div>
+		<div class="sup-logos">
+			<div class="sup-logo logo-1"><img src="~/img/sup-1.jpg" alt="" /></div>
+			<div class="sup-logo logo-2"><img src="~/img/sup-2.png" alt="" /></div>
+			<div class="sup-logo logo-3"><img src="~/img/sup-3.png" alt="" /></div>
+			<div class="sup-logo logo-4"><img src="~/img/sup-4.png" alt="" /></div>
+			<div class="sup-logo logo-5"><img src="~/img/sup-5.png" alt="" /></div>
+			<div class="sup-logo logo-6"><img src="~/img/sup-6.png" alt="" /></div>
+			<div class="sup-logo logo-7"><img src="~/img/sup-7.png" alt="" /></div>
+			<div class="sup-logo logo-8"><img src="~/img/sup-8.jpg" alt="" /></div>
+		</div>
+	</div>
+
+
+	<h1 class="h1-header">НОВИНКИ</h1>
+	<div class="swiper swiper-latest">
+		<div class="swiper-wrapper">
+			@foreach(var p in Model)
+			{
+				<div class="swiper-slide">
+					<div class="slide-img">
+						@{
+							string src = "https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/" + p.FileName;
+						}
+						<img src="@src" alt="Alternate Text" />
+					</div>
+					<div class="slide-name">
+						<p>@Html.Raw(p.Name)</p>
+					</div>
+				</div>
+			}
+		</div>
+		
+		<div class="swiper-scrollbar"></div>
+	</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="~/js/swiper.js"></script>

@@ -1,0 +1,104 @@
+﻿.master-content .content {
+    background-color: #fdfdfd;
+}
+
+.about-h {
+    height: 250px;
+    text-align: center;
+    position: relative;
+    display: block;
+    background: url('~img/About/NL.png') center center no-repeat;
+}
+
+    .about-h .textcont {
+        display: inline-block;
+        height: 100%;
+        vertical-align: top;
+        text-align: left
+    }
+
+        .about-h .textcont .t1 {
+            font-size: 31px;
+            display: block;
+            color: white;
+            padding-top: 80px;
+        }
+
+        .about-h .textcont .t2 {
+            font-size: 20px;
+            display: block;
+            color: white;
+            padding-top: 10px;
+            font-family: OpenSans-Light
+        }
+
+    .about-h .im1 {
+        height: 100%;
+        width: 160px;
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 220px;
+        background: url('~img/About/m1.png') no-repeat center bottom
+    }
+
+    .about-h .im2 {
+        height: 100%;
+        width: 160px;
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 10px;
+        background: url('~img/About/m2.png') no-repeat center bottom
+    }
+
+
+.about-cont {
+    display: block;
+    text-align: center;
+}
+
+    .about-cont > div {
+        display: inline-block;
+        text-align: left;
+        width: 52%;
+        white-space: normal;
+        overflow: hidden;
+    }
+
+.cont-h {
+    font-size: 20px;
+    display: block;
+}
+
+.cont-t {
+    font-size: 15px;
+    display: block;
+    line-height: 32px;
+}
+
+.image-cont {
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+    .image-cont > div {
+        display: inline-block;
+        text-align: left;
+        width: 80%;
+        overflow: hidden;
+    }
+
+.cont-c {
+    display: inline-block;
+    text-align: center;
+}
+
+    .cont-c .wrap {
+        padding-top: 10px;
+        overflow: hidden;
+        white-space: normal;
+        display: inline-block
+    }
+
+.aim {
+    margin: 10px 10px;
+}
