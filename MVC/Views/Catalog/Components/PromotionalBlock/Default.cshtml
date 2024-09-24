@@ -1,0 +1,76 @@
+﻿<style>
+    .prom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .prom-text {
+        color: #00362A;
+        font-family: Montserrat;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 27px;
+        margin: 20px;
+    }
+
+    .prom-img {
+        float: right;
+        width: 400px;
+    }
+
+    button {
+        background-color: #64998C;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        margin: 0 auto;
+        margin-left: 20px;
+    }
+        button:hover{
+            transform: scale(1.1);
+        }
+
+
+    @@media (max-width: 1147px){
+        .prom-img {
+            float: none;
+            clear: both;
+            margin: 0 auto;
+            width: 100%;
+        }
+        button{
+            margin-left: auto;
+        }
+    }
+
+
+</style>
+
+<div class="promotion">
+    <h1 class="h1-header">РЕКЛАМНАЯ ПРОДУКЦИЯ</h1>
+    <div class="prom">
+        <p class="prom-text">
+            <img src="~/img/prod.png" class="prom-img" />
+            Для удобного представления наших продуктов в вашем салоне предлагаем разнообразные рекламные образцы.
+            В случае ограниченного пространства у нас есть компактные комплекты(стенды), специально созданные для эффективной демонстрации
+            в ограниченных условиях. Если вам нужно что-то особенное и индивидуальное, мы также предоставляем услуги по индивидуальному заказу стендов.
+            Наши образцы подходят для выездной работы дизайнера, обеспечивая вас всем необходимым для успешного продвижения наших продуктов в вашем салоне.
+        </p>
+        <button>
+            <a asp-action="Production" style="color:white" asp-route-productType=4>Подробнее</a>
+        </button>
+    </div>
+
+    <script>
+        var currentUrl = window.location.href;
+
+        if (currentUrl.includes('productType=4')) {
+            document.querySelector('.promotion').style.display = 'none';
+        }
+    </script>
+</div>

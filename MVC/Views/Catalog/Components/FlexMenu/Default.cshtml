@@ -1,0 +1,49 @@
+﻿@model Dictionary<List<string>, List<string>>
+
+<link href="~/css/flexMenu.css" rel="stylesheet" />
+
+<div class="flex-menu">
+    @foreach (var type in Model)
+    {
+        <div class="dropdown">
+            @{
+                string input_id = type.Key[1] + "-menu-toggle";
+            }
+            <input class="menu-toggle" id="@input_id" type="checkbox" data-menu="@input_id" onchange="toggleMenu(this)" />
+            <label for="@input_id" class="dropdown-name" style="position: relative; font-weight: normal; flex-direction: column">
+                <span style="width: 100%; display: flex; justify-content: space-between;">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <img src="/img/@type.Key[2]" / style="width: 20px; height: 20px;">
+                        <a class="dropdown-toggle" asp-action="Production" asp-controller="Catalog" asp-route-productType=@type.Key[0]>
+                            @type.Key[1]
+                        </a>
+                    </div>
+                    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 8 L12 20 L19 8" />
+                    </svg>
+                </span>
+                <span class="drop-menu">
+                    @foreach (var category in type.Value)
+                    {
+                        <a class="dropdown-item" asp-action="Production" asp-controller="Catalog" asp-route-category=@category asp-route-productType=@type.Key[0] asp-route-isBasic=true>@category</a>
+                    }
+                </span>
+            </label>
+        </div>
+    }
+</div>
+
+
+<script>
+    function toggleMenu(currentMenu) {
+        // Получаем все чекбоксы на странице
+        const menus = document.querySelectorAll('.menu-toggle');
+
+        // Переключаем все другие меню в неактивное состояние
+        menus.forEach(menu => {
+            if (menu !== currentMenu) {
+                menu.checked = false;
+            }
+        });
+    }
+</script>

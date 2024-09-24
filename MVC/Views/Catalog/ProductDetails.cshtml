@@ -1,0 +1,109 @@
+﻿@model ProductDetailsViewModel
+<link href="~/css/productDetails.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+<div class="container" style="display: flex;">
+    <nav>
+        @await Component.InvokeAsync("FlexMenu")
+    </nav>
+    <div class="content">
+
+        @if(Model.CatSlider != null)
+        {
+            <div class="categoryInfo" style="width: 100%;">
+                <div class="swiper swiper-main" rewind="true">
+                    <div class="swiper-wrapper">
+                        @foreach (var fileName in Model.CatSlider.Item2)
+                        {
+                            <div class="swiper-slide" style="height: 90%;">
+                                <img style="width: 100%; height: 100%; object-fit: cover;" src="https://zovprofil.by/Images/ClientsCatalogImages/@fileName" alt="Alternate Text" />
+                            </div>
+                        }
+                    </div>
+                    <div class="swiper-scrollbar"></div>
+                </div>
+                <p>@Html.Raw(@Model.CatSlider.Item1)</p>
+            </div>
+        }
+
+        <div style="width: 100%;">
+            <div class="product">
+
+                <div class="product-image">
+                    <div class="inline-image">
+                        <img class="inline-image-block" src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@Model.FileName" alt="Product Image">
+                        @if (Model.techStoreFileName != null)
+                        {
+                            <img class="inline-image-block" src="https://zovprofil.by/Images/TechStore/@Model.techStoreFileName" alt="Product Image">
+                        }
+                    </div>
+
+                    <div class="swiper swiper-main swiper-flag" rewind="true">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@Model.FileName" alt="Product Image">
+                            </div>
+                            @if (Model.techStoreFileName != null)
+                            {
+                                <div class="swiper-slide">
+                                    <img src="https://zovprofil.by/Images/TechStore/@Model.techStoreFileName" alt="Product Image">
+                                </div>
+                            }
+                        </div>
+                        <div class="swiper-scrollbar"></div>
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <p><strong>@Html.Raw(@Model.Name)<br />@Html.Raw(@Model.Color)</strong></p>
+                    <div class="info product-description">
+                        <p><strong>Описание:</strong></p>
+                        <p>@Html.Raw(@Model.Description)</p>
+                    </div>
+                    <div class="info product-sizes">
+                        <p><strong>Размеры:</strong></p>
+                        <p>@Html.Raw(@Model.Sizes)</p>
+                    </div>
+                    <div class="info product-material">
+                        <p><strong>Материалы:</strong></p>
+                        <p>@Html.Raw(@Model.Material)</p>
+                    </div>
+                    @if(Model.CategoryColors != null)
+                    {
+                        <div>@Model.CategoryColors.Count()</div>
+                        <div class="info product-colors">
+                            <p><strong>Цвета:</strong></p>
+                            <div class ="product-color-links">
+                                @foreach (var color in Model.CategoryColors)
+                                {
+                                    <a asp-action="ProductDetails" asp-route-imageId=@color.ImageId title="@color.Color">
+                                        <div class="product-color-img" style="background-image: url('https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@color.FileName');"></div>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            @if(Model.ProductType == 0)
+            {
+                <div class="relatedFronts">
+                    @await Component.InvokeAsync("RelatedFronts", new { matrixId = Model.MatrixId })
+                </div>
+
+                <div class="relatedDecors">
+                    @await Component.InvokeAsync("RelatedDecors", new { matrixId = Model.MatrixId })
+                </div>
+            }
+        </div>
+        <div class="promotion">
+            @await Component.InvokeAsync("PromotionalBlock")
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="~/js/swiper.js"></script>

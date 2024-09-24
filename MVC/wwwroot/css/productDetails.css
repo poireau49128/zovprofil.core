@@ -1,0 +1,118 @@
+﻿.content {
+    width: calc(70% - 20px);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+nav {
+    width: 30%;
+    margin-right: 80px;
+}
+
+.swiper {
+    width: 100%;
+    height: 40vw;
+    max-height: 600px;
+    --swiper-scrollbar-bg-color: rgba(128, 128, 128, 0.3);
+    --swiper-scrollbar-drag-bg-color: /*rgba(100, 153, 140, 1)*/ #2C423D;
+    --swiper-scrollbar-sides-offset: 20%;
+    --swiper-scrollbar-size: 2px;
+}
+
+.swiper-slide {
+    display: flex !important;
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+@media(max-width: 960px){
+    .container{
+        flex-direction: column;
+        width: 100%;
+    }
+        .content {
+            width: 100%;
+            margin: auto;
+        }
+        nav{
+            width: 100%;
+        }
+}
+
+
+
+
+.product{
+    display: flex;
+}
+    .product-image{
+        width: 40%;
+        margin-right: 20px;
+    }
+        .inline-image {
+            display: block;
+            height: 100%;
+        }
+            .inline-image-block {
+                height: 50%;
+                width: 100%;
+                max-height: 400px;
+                object-fit: contain;
+            }
+        .swiper-flag {
+            display: none !important;
+        }
+
+    .product-info{
+        width: 60%;
+    }
+
+@media(max-width: 768px) {
+    .product{
+        display: block;
+    }
+        .product-image{
+            width: 100%;
+        }
+        .product-info{
+            width: 90%;
+            margin: auto;
+        }
+        .inline-image{
+            display: none;
+        }
+        .swiper-flag {
+            display: block !important;
+            height: 60vw;
+        }
+        .swiper-flag img {
+            max-height: 90%;
+            max-width: 90%;
+            height: auto;
+            width: auto;
+        }
+}
+
+
+.product-color-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 5px;
+}
+    .product-color-img {
+        width: 50px;
+        height: 50px;
+        background-image: url('path/to/your/image.jpg');
+        background-position: top left;
+        background-size: 200% auto;
+        background-repeat: no-repeat;
+    }

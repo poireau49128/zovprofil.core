@@ -1,56 +1,92 @@
 ﻿@model List<Product>
+<link rel="stylesheet" href="~/css/production.css" />
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Products</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <h1>Product List</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Color</th>
-                <th>Type</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                int c = 1;
-            }
-            @foreach (var product in Model)
+<div class="container">
+    <nav>
+        @await Component.InvokeAsync("FlexMenu")
+    </nav>
+    <div class="content">
+        @foreach (var product in Model)
+        {
+            if (ViewBag.Operation == "UniqueCategories")
             {
-                <tr>
-                    <td>@c</td>
-                    @{
-                        c += 1;
-                    }
-                    <td>@product.ImageId</td>
-                    <td>@product.Name</td>
-                    <td>@product.Color</td>
-                    <td>@product.ProductType</td>
-                    <td>@product.Category</td>
-                </tr>
+                <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType asp-route-isBasic=true class="block">
+                    <div class="block-img">
+                        <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
+                    </div>
+                    <p>@product.Category</p>
+                </a>
             }
-        </tbody>
-    </table>
-</body>
-</html>
+            else if (ViewBag.Operation == "BasicProducts")
+            {
+                <a asp-action="ProductDetails" asp-route-imageId=@product.ImageId class="block">
+                    <div class="block-img">
+                        <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
+                    </div>
+                    <p>@Html.Raw(product.Name)<br />@product.Color</p>
+                </a>
+            }
+            else if (ViewBag.Operation == "GroupedProducts")
+            {
+                <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType asp-route-isBasic=false asp-route-name=@product.Name.Split(' ')[0] class="block">
+                    <div class="block-img">
+                        <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
+                    </div>
+                    <p>@product.Name.Split(' ')[0]</p>
+                </a>
+            }
+            
+        }
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function adjustCard(card) {
+            const img = card.querySelector('img');
+            const text = card.querySelector('p');
+            const maxCardHeight = 310;
+            const initialCardHeight = 275;
+            const initialFontSize = 18;
+
+            let cardHeight = initialCardHeight;
+            let fontSize = initialFontSize;
+            let isAdjusted = false;
+
+            const imgHeight = img.clientHeight;
+            const textHeight = text.scrollHeight;
+            const availableHeight = card.clientHeight - imgHeight;
+
+            while (textHeight > availableHeight && fontSize > 14) {
+                fontSize -= 1;
+                text.style.fontSize = fontSize + 'px';
+                isAdjusted = true;
+                console.log("-font");
+            }
+
+            while (textHeight > availableHeight && cardHeight < maxCardHeight) {
+                cardHeight += 5;
+                card.style.height = cardHeight + 'px';
+                isAdjusted = true;
+                console.log("+height");
+            }
+
+            if (!isAdjusted) {
+                text.style.fontSize = initialFontSize + 'px';
+                card.style.height = initialCardHeight + 'px';
+            }
+            console.log("-------------");
+            console.log(imgHeight);
+            console.log(textHeight);
+            console.log(availableHeight);
+            console.log(fontSize);
+            console.log(cardHeight);
+            console.log(isAdjusted);
+            console.log("!!!!!!!!!!!!!!!!!!!");
+        }
+
+        const cards = document.querySelectorAll('.block');
+        cards.forEach(card => adjustCard(card));
+    });
+</script>
