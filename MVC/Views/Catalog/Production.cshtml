@@ -62,28 +62,18 @@
                 fontSize -= 1;
                 text.style.fontSize = fontSize + 'px';
                 isAdjusted = true;
-                console.log("-font");
             }
 
             while (textHeight > availableHeight && cardHeight < maxCardHeight) {
                 cardHeight += 5;
                 card.style.height = cardHeight + 'px';
                 isAdjusted = true;
-                console.log("+height");
             }
 
             if (!isAdjusted) {
                 text.style.fontSize = initialFontSize + 'px';
                 card.style.height = initialCardHeight + 'px';
             }
-            console.log("-------------");
-            console.log(imgHeight);
-            console.log(textHeight);
-            console.log(availableHeight);
-            console.log(fontSize);
-            console.log(cardHeight);
-            console.log(isAdjusted);
-            console.log("!!!!!!!!!!!!!!!!!!!");
         }
 
         const cards = document.querySelectorAll('.block');

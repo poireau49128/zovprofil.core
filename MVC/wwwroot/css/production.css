@@ -71,3 +71,8 @@ main .container {
         margin-top: auto;
         font-size: 18px;
     }
+
+.relatedProducts{
+    display: flex;
+    justify-content: center;
+}

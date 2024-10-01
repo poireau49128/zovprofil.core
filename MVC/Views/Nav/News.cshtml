@@ -1,7 +1,18 @@
-﻿@using System.Globalization
-<link href="~/css/news.css" rel="stylesheet" />
+﻿@using Ganss.Xss
 
 @model List<New>
+
+<link href="~/css/news.css" rel="stylesheet" />
+
+
+@{
+    var sanitizer = new HtmlSanitizer();
+    sanitizer.AllowedTags.Add("a");
+    sanitizer.AllowedAttributes.Add("href");
+}
+
+
+
 
 <div class="container">
     @foreach (var newsItem in Model)
@@ -9,20 +20,7 @@
         <div class="news-item">
             <p class="news-header">@newsItem.HeaderText</p>
             <p class="news-date">@newsItem.DateTime.ToString()</p>
-            <p class="news-body">@newsItem.BodyText</p>
+            <p class="news-body">@Html.Raw(sanitizer.Sanitize(newsItem.BodyText))</p>
         </div>
     }
 </div>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var newsDateElements = document.querySelectorAll('.news-date');
-
-        newsDateElements.forEach(function (element) {
-            var date = new Date(element.innerText);
-            var formattedDate = date.toISOString().split('T')[0];
-            element.innerText = formattedDate;
-        });
-    });
-</script>

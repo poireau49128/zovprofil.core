@@ -116,3 +116,6 @@ nav {
         background-size: 200% auto;
         background-repeat: no-repeat;
     }
+        .product-color-img:hover{
+            transform: scale(1.1);
+        }

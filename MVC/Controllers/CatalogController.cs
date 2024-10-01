@@ -123,7 +123,7 @@ namespace MVC.Controllers
                     long techConfig = await connection.QueryFirstOrDefaultAsync<long>(sql, new { product.ConfigId });
                     sql = @"SELECT FileName 
                             FROM [infiniu2_catalog].[dbo].[TechStoreDocuments]
-                            WHERE TechId = @techConfig";
+                            WHERE TechId = @techConfig AND DocType = 0";
 
                     techFileName = await connection.QueryFirstOrDefaultAsync<string>(sql, new { techConfig });
                 }

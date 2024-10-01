@@ -90,9 +90,9 @@
 				<div class="menu-overlay">
 					<div class="menu">
 						<ul>
-							<li class="menu-mobile"><a href="/News">Новости</a></li>
-							<li class="menu-tablet"><a href="/About">О компании</a></li>
-							<li class="menu-tablet"><a href="/Contacts">Контакты</a></li>
+							<li class="menu-mobile"><a href="@Url.Action("News", "Nav")">Новости</a></li>
+							<li class="menu-tablet"><a href="@Url.Action("About", "Nav")">О компании</a></li>
+							<li class="menu-tablet"><a href="@Url.Action("Contacts", "Nav")">Контакты</a></li>
 							<li class="but menu-buttons">
 								<a href="http://www.wm-shop.by/" onclick="ymetr()" target="_blank" style="display: flex; flex-direction: row;">
 									<img src="~/img/cart.png" alt="" />
@@ -113,9 +113,6 @@
 								</a>
 								<a target="_blank" href="https://t.me/OMC_Profil">
 									<img src="~/img/telegram.svg" alt="" />
-								</a>
-								<a href="#">
-									<img src="~/img/whatsapp.svg" alt="" />
 								</a>
 							</li>
 						</ul>
@@ -174,7 +171,7 @@
                 <div class="links">
                     <ul>
 						<li><a href="@Url.Action("Main", "Nav")">Главная</a></li>
-						<li><a href="@Url.Action("Contacts", "Nav")s">Контакты</a></li>
+						<li><a href="@Url.Action("Contact", "Nav")s">Контакты</a></li>
 						<li><a href="@Url.Action("Wheretobuy", "Nav")">Где купить</a></li>
                     </ul>
                 </div>
@@ -210,6 +207,7 @@
 			modal.style.display = "none";
 		}
 	function showModal() {
+		console.log("showModal");
 		var modal = document.getElementById("MessageDialogModal");
 		modal.style.display = "block";
 
