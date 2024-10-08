@@ -1,4 +1,9 @@
 ﻿@model ProductDetailsViewModel
+@using Ganss.Xss
+@{
+    var sanitizer = new HtmlSanitizer();
+    sanitizer.AllowedTags.Add("br");
+}
 <link href="~/css/productDetails.css" rel="stylesheet" />
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -24,7 +29,7 @@
                     </div>
                     <div class="swiper-scrollbar"></div>
                 </div>
-                <p>@Html.Raw(@Model.CatSlider.Item1)</p>
+                <p>@Html.Raw(sanitizer.Sanitize(@Model.CatSlider.Item1))</p>
             </div>
         }
 
@@ -57,18 +62,18 @@
                 </div>
 
                 <div class="product-info">
-                    <p><strong>@Html.Raw(@Model.Name)<br />@Html.Raw(@Model.Color)</strong></p>
+                    <p><strong>@Html.Raw(sanitizer.Sanitize(@Model.Name))<br />@Html.Raw(sanitizer.Sanitize(@Model.Color))</strong></p>
                     <div class="info product-description">
                         <p><strong>Описание:</strong></p>
-                        <p>@Html.Raw(@Model.Description)</p>
+                        <p>@Html.Raw(sanitizer.Sanitize(@Model.Description))</p>
                     </div>
                     <div class="info product-sizes">
                         <p><strong>Размеры:</strong></p>
-                        <p>@Html.Raw(@Model.Sizes)</p>
+                        <p>@Html.Raw(sanitizer.Sanitize(@Model.Sizes))</p>
                     </div>
                     <div class="info product-material">
                         <p><strong>Материалы:</strong></p>
-                        <p>@Html.Raw(@Model.Material)</p>
+                        <p>@Html.Raw(sanitizer.Sanitize(@Model.Material))</p>
                     </div>
                     @if(Model.CategoryColors != null)
                     {

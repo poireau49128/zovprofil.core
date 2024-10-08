@@ -1,4 +1,9 @@
 ﻿@model List<Product>
+@using Ganss.Xss
+@{
+    var sanitizer = new HtmlSanitizer();
+    sanitizer.AllowedTags.Add("br");
+}
 <link rel="stylesheet" href="~/css/production.css" />
 
 <div class="container">
@@ -23,7 +28,7 @@
                     <div class="block-img">
                         <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
                     </div>
-                    <p>@Html.Raw(product.Name)<br />@product.Color</p>
+                    <p>@Html.Raw(sanitizer.Sanitize(product.Name))<br />@product.Color</p>
                 </a>
             }
             else if (ViewBag.Operation == "GroupedProducts")

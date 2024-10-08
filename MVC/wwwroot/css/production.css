@@ -38,7 +38,7 @@ main .container {
 }
 
 .block {
-    display: flex;
+    /*display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -50,8 +50,23 @@ main .container {
     text-align: center;
     box-sizing: border-box;
     max-width: 200px;
+    min-width: 180px;*/
+
+    display: inline-block;
+    text-align: center;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    width: 175px;
+    vertical-align: top;
+    height: 275px;
+    padding: 5px;
+    margin: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    max-width: 200px;
     min-width: 180px;
-    /*overflow: hidden;*/
+    border: 1px solid #d9d9d9;
 }
     .block-img{
         height: 80%;
@@ -72,7 +87,13 @@ main .container {
         font-size: 18px;
     }
 
-.relatedProducts{
-    display: flex;
-    justify-content: center;
+.relatedProducts {
+    /*display: flex;
+    justify-content: center;*/
+    display: inline-block;
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
 }
+
