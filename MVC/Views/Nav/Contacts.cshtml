@@ -1,140 +1,47 @@
 ﻿<link href="/css/contacts.css" rel="stylesheet" />
+@model IEnumerable<MVC.Models.Section>
+@functions {
+    // Вспомогательный метод для отображения строки только если значение не null или пусто
+    private string DisplayIfNotNullOrEmpty(string? value, string label=null)
+    {
+        return !string.IsNullOrEmpty(value) ? $"{label}{value}" : string.Empty;
+    }
+}
 
 <div class="container">
-    <div class="block">
-        <div class="header">
-            <div class="header-left">
-                <span>Приемная</span>
-            </div>
-            <div class="header-right">
-                <span>e-mail: <a href="mailto:office@zovprofil.by" style="color:white; text-decoration:underline">office@zovprofil.by</a></span>
-                <span>тел/факс: +375 (152) 60-81-04</span>
-            </div>
-        </div>
-    </div>
-    <div class="block">
-        <div class="header">
-            <div class="header-left">
-                <span>Маркетинг</span>
-            </div>
-            <div class="header-right">
-                <span>e-mail: <a href="mailto:marketing@zovprofil.by" style="font-size:15px; color:white; text-decoration:underline">marketing@zovprofil.by</a></span>
-                <span>тел/факс: +375 (152) 60-81-63</span>
-                <span>тел.: +375 (29) 155-58-94</span>
-            </div>
-        </div>
-    </div>
-    <div class="block">
-        <div class="header">
-            <div class="header-left">
-                <span>Отдел продаж</span>
-            </div>
-            <div class="header-right">
-                <span>e-mail: <a href="mailto:marketing@zovprofil.by" style="font-size:15px; color:white; text-decoration:underline">marketing@zovprofil.by</a></span>
-                <span>тел/факс: +375 (152) 60-81-63</span>
-            </div>
-        </div>
-        <div class="contacts">
-            <div class="contact-item">
-                <img src="~/img/img_avatar.png" alt="Alternate Text" class="contact-avatar" />
-                <span class="contact-name">Михаил Кондрашов</span>
-                <span class="contact-post">начальник службы сбыта</span>
-                <span class="contact-phone">моб. +375 (29) 111-94-94</span>
+    @foreach (var sect in Model)
+    {
+        <div class="block">
+            <div class="header">
+                <div class="header-left">
+                    <span>@sect.Name</span>
+                </div>
+                <div class="header-right">
+                    @if (!string.IsNullOrEmpty(sect.Email))
+                    {
+                        <span>e-mail: <a href="mailto:@sect.Email" style="font-size:15px; color:white; text-decoration:underline">@sect.Email</a></span>
+                    }
+                    <span>@DisplayIfNotNullOrEmpty(sect.Fax, "тел/факс: ")</span>
+                    <span>@DisplayIfNotNullOrEmpty(sect.Phone, "тел.: ")</span>
+                </div>
             </div>
 
-            <div class="contact-item">
-                <img src="~/img/img_avatar.png" alt="Alternate Text" class="contact-avatar" />
-                <span class="contact-name">Павел Миклашевич</span>
-                <span class="contact-post">специалист по продаже</span>
-                <span class="contact-lang">PL, EN</span>
-                <span class="contact-phone">моб. +375 (29) 103-33-23</span>
-                <span class="contact-info">Работа с клиентами РБ, РФ и Польши.<br />Основные направления: мебельный и строительный погонаж</span>
+            <div class="contacts">
+                @foreach (var contact in sect.Contacts)
+                {
+                    <div class="contact-item">
+                        @{
+                            var avatar = contact.isMale ? "/img/img_avatar.png" : "/img/img_avatar2.png";
+                        }
+                        <img src="@avatar" alt="Alternate Text" class="contact-avatar" />
+                        <span class="contact-name">@DisplayIfNotNullOrEmpty(contact.Name)</span>
+                        <span class="contact-post">@DisplayIfNotNullOrEmpty(contact.Position)</span>
+                        <span class="contact-lang">@DisplayIfNotNullOrEmpty(contact.Languages)</span>
+                        <span class="contact-phone">@DisplayIfNotNullOrEmpty(contact.Phone, "моб. ")</span>
+                        <span class="contact-info">@DisplayIfNotNullOrEmpty(contact.Description)</span>
+                    </div>
+                }
             </div>
         </div>
-    </div>
-    <div class="block">
-        <div class="header">
-            <div class="header-left">
-                <span>Логистика</span>
-            </div>
-            <div class="header-right">
-                <span>e-mail: <a href="mailto:e.skamaroshka@zovprofil.by" style="font-size:15px; color:white; text-decoration:underline">e.skamaroshka@zovprofil.by</a></span>
-            </div>
-        </div>
-        <div class="contacts">
-            <div class="contact-item">
-                <img src="~/img/img_avatar2.png" alt="Alternate Text" class="contact-avatar" />
-                <span class="contact-name">Елена Эйсмонт</span>
-                <span class="contact-post">комплектовщик</span>
-                <span class="contact-phone">моб. +375 (29) 180-18-52</span>
-                <span class="contact-info">Прием товара</span>
-            </div>
-            <div class="contact-item">
-                <img src="~/img/img_avatar2.png" alt="Alternate Text" class="contact-avatar" />
-                <span class="contact-name">Екатерина Марцулевич</span>
-                <span class="contact-post">ведущий экономист</span>
-                <span class="contact-phone">моб. +375 (29) 338-64-00</span>
-                <span class="contact-info">Выставление счетов и выписка документов.</span>
-            </div>
-        </div>
-    </div>
-    <div class="block">
-        <div class="header">
-            <div class="header-left">
-                <span>Снабжение</span>
-            </div>
-            <div class="header-right">
-                <span>e-mail: <a href="mailto:supply@zovprofil.by" style="font-size:15px; color:white; text-decoration:underline">supply@zovprofil.by</a></span>
-            </div>
-        </div>
-        <div class="contacts">
-            <div class="contact-item">
-                <img src="~/img/img_avatar2.png" alt="Alternate Text" class="contact-avatar" />
-                <span class="contact-name">Марина Гайдель</span>
-                <span class="contact-post">начальник отдела ВЭС</span>
-                <span class="contact-lang">PL, EN, DE</span>
-                <span class="contact-phone">моб. +375 (29) 111-83-83</span>
-            </div>
-        </div>
-    </div>
-    <div class="block">
-        <div class="header">
-            <div class="header-left">
-                <span>Техотдел</span>
-            </div>
-            <div class="header-right">
-                <span>e-mail: <a href="mailto:tech@zovprofil.by" style="font-size:15px; color:white; text-decoration:underline">tech@zovprofil.by</a></span>
-            </div>
-        </div>
-        <div class="contacts">
-            <div class="contact-item">
-                <img src="~/img/img_avatar.png" alt="Alternate Text" class="contact-avatar" />
-                <span class="contact-name">Юрий Янкойть</span>
-                <span class="contact-post">главный технолог</span>
-                <span class="contact-phone">моб. +375 (29) 180-18-45</span>
-            </div>
-        </div>
-    </div>
-    <div class="block">
-        <div class="header">
-            <div class="header-left">
-                <span>Отдел контроля качества</span>
-            </div>
-            <div class="header-right">
-            </div>
-        </div>
-        <div class="contacts">
-            <div class="contact-item">
-                <img src="~/img/img_avatar2.png" alt="Alternate Text" class="contact-avatar" />
-                <span class="contact-name">Татьяна Шемет</span>
-                <span class="contact-post">специалист</span>
-                <span class="contact-phone">моб. +375 (29) 180-18-69</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="scheme">
-        <span>Схема проезда:</span>
-        <img src="~/img/map.png" alt="Alternate Text" />
-    </div>
+    }
 </div>

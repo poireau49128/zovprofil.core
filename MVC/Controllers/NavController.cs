@@ -71,20 +71,38 @@ namespace MVC.Controllers
             
         }
 
-		public IActionResult Downloads()
+		public async Task<IActionResult> Downloads()
 		{
-			return View();
-		}
+            var documents = await _dbContext.Documents.ToListAsync();
+
+            var fileIcons = new Dictionary<string, string>
+            {
+                { "pdf", "/img/PDFFile.png" },
+                { "doc", "/img/WordFile.png" },
+                { "docx", "/img/WordFile.png" },
+                { "zip", "/img/ArchiveFile.png" },
+                { "rar", "/img/ArchiveFile.png" },
+                { "jpg", "/img/ImageFile.png" },
+                { "png", "/img/ImageFile.png" }
+            };
+            ViewBag.FileIcons = fileIcons;
+
+            return View(documents);
+        }
 
 		public IActionResult About()
 		{
 			return View();
 		}
 
-		public IActionResult Contacts()
+		public async Task<IActionResult> Contacts()
 		{
-			return View();
-		}
+            var sectionsWithContacts = await _dbContext.Sections
+														.Include(s => s.Contacts)
+														.ToListAsync();
+
+            return View(sectionsWithContacts);
+        }
         public async Task<IActionResult> Main()
         {
 			var latestList = await _dbContextProduct.Products
