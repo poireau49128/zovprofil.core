@@ -38,20 +38,6 @@ main .container {
 }
 
 .block {
-    /*display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #d9d9d9;
-    flex: 1 0 150px;
-    height: 275px;
-    padding: 5px;
-    margin: 10px;
-    text-align: center;
-    box-sizing: border-box;
-    max-width: 200px;
-    min-width: 180px;*/
-
     display: inline-block;
     text-align: center;
     margin-left: 15px;
@@ -59,7 +45,8 @@ main .container {
     margin-bottom: 30px;
     width: 175px;
     vertical-align: top;
-    height: 275px;
+    /*height: 275px;*/
+    min-height: 200px;
     padding: 5px;
     margin: 10px;
     text-align: center;
@@ -88,8 +75,6 @@ main .container {
     }
 
 .relatedProducts {
-    /*display: flex;
-    justify-content: center;*/
     display: inline-block;
     margin: 0;
     text-align: center;

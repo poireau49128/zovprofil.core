@@ -20,7 +20,7 @@ namespace MVC.Components
             using (var connection = new SqlConnection(_dbContext.GetConnectionString()))
             {
                 await connection.OpenAsync();
-                string sql = @"SELECT CCI.ImageID,CCI.FileName, CCI.Name, CCI.Category, CCI.ProductType, CCI.ConfigID, DC.MatrixId
+                string sql = @"SELECT DISTINCT CCI.ImageID,CCI.FileName, CCI.Name, CCI.Category, CCI.ProductType, CCI.ConfigID
                                 FROM [infiniu2_catalog].[dbo].[CollectionsConfig] AS CC
 	                                RIGHT JOIN [infiniu2_catalog].[dbo].[DecorConfig] AS DC
 		                                ON CC.ConfigId2 = DC.MatrixId

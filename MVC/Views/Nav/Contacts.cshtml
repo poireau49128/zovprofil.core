@@ -7,6 +7,9 @@
         return !string.IsNullOrEmpty(value) ? $"{label}{value}" : string.Empty;
     }
 }
+@{
+    ViewBag.Title = "Контакты";
+}
 
 <div class="container">
     @foreach (var sect in Model)

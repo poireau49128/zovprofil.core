@@ -5,6 +5,9 @@
 	var sanitizer = new HtmlSanitizer();
 	sanitizer.AllowedTags.Add("br");
 }
+@{
+    ViewBag.Title = "Главная";
+}
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
@@ -101,6 +104,33 @@
 							В нашем каталоге мебели можно выбрать как классические модели <br> гостиных и стенок, так и ультра современные комплекты.
 						</div>
 						<button><a asp-controller="Catalog" asp-action="Production" asp-route-productType=2 style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-slide">
+			<div class="block">
+				<div class="sub-block">
+					<div class="sub-content">
+						<h1>Кредит</h1>
+						<div class="text">
+							Кредит от ОАО «АСБ БЕЛАРУСБАНК» на покупку мебели
+						</div>
+						<button><a href="https://zovprofil.by/Files/Потребительский кредит «На родныя тавары».pdf" style="color: white">Подробнее</a></button>
+					</div>
+				</div>
+				<div class="image">
+					<picture>
+						<source style="object-fit: fill;" srcset="/Images/credit1.jpg" media="(min-width: 1300px)" />
+						<img src="/Images/credit.jpg" alt="" style="object-fit: fill;" />
+					</picture>
+
+					<div class="sub-block">
+						<h1>Кредит</h1>
+						<div class="text">
+							Кредит от ОАО «АСБ БЕЛАРУСБАНК» на покупку мебели
+						</div>
+						<button><a href="https://zovprofil.by/Files/Потребительский кредит «На родныя тавары».pdf" target="_blank" style="color: white">Подробнее</a></button>
 					</div>
 				</div>
 			</div>
@@ -246,17 +276,14 @@
 		<div class="swiper-wrapper">
 			@foreach(var p in Model)
 			{
-				<div class="swiper-slide">
+				<a asp-controller="Catalog" asp-action="ProductDetails" asp-route-imageId=@p.ImageId class="swiper-slide">
 					<div class="slide-img">
-						@{
-							string src = "https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/" + p.FileName;
-						}
-						<img src="@src" alt="Alternate Text" />
+						<img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@p.FileName" alt="">
 					</div>
 					<div class="slide-name">
-						<p>@Html.Raw(sanitizer.Sanitize(p.Name))</p>
+						<p>@Html.Raw(sanitizer.Sanitize(p.Name))<br />@p.Color</p>
 					</div>
-				</div>
+				</a>
 			}
 		</div>
 		

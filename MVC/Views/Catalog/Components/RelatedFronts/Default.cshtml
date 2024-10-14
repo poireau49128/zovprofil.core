@@ -11,7 +11,7 @@
 <div class="relatedProducts">
     @foreach (ProductDetailsViewModel product in Model)
     {
-        string textColor = ViewBag.MainMatrixId == product.MatrixId ? "#A3C2B9" : "#00362A";
+        string textColor = ViewBag.MainName == product.Name ? "#A3C2B9" : "#00362A";
         <a asp-action="ProductDetails" asp-route-imageId=@product.ImageId class="block">
             <div class="block-img">
                 <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">

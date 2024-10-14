@@ -15,13 +15,13 @@ namespace MVC.Components
         {
             _dbContext = dbContext;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int matrixId)
+        public async Task<IViewComponentResult> InvokeAsync(int matrixId, string name)
         {
-            ViewBag.MainMatrixId = matrixId;
+            ViewBag.MainName = name;
             using (var connection = new SqlConnection(_dbContext.GetConnectionString()))
             {
                 await connection.OpenAsync();
-                string sql = @"SELECT CCI.ImageID,CCI.FileName, CCI.Name, CCI.Category, CCI.ProductType, CCI.ConfigID, FC.MatrixId
+                string sql = @"SELECT DISTINCT CCI.ImageID,CCI.FileName, CCI.Name, CCI.Category, CCI.ProductType, CCI.ConfigID
                                 FROM [infiniu2_catalog].[dbo].[CollectionsConfig] AS CC
 	                                RIGHT JOIN [infiniu2_catalog].[dbo].[FrontsConfig] AS FC
 		                                ON CC.ConfigId2 = FC.MatrixId
@@ -36,7 +36,7 @@ namespace MVC.Components
                                 WHERE CC.ConfigId1 = @matrixId AND ProductType = 0 AND ToSite = 1";
                 IEnumerable<ProductDetailsViewModel> products = await connection.QueryAsync<ProductDetailsViewModel>(sql, new { matrixId });
                 var sortedProducts = products
-                                        .OrderBy(p => p.MatrixId == matrixId ? 1 : 0) // Главный товар будет в конце
+                                        .OrderBy(p => p.Name == name ? 1 : 0) // Главный товар будет в конце
                                         .ToList();
                 return View(sortedProducts);
             }

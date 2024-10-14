@@ -3,6 +3,7 @@
 @{
     var sanitizer = new HtmlSanitizer();
     sanitizer.AllowedTags.Add("br");
+    ViewBag.Title = @Model.Category;
 }
 <link href="~/css/productDetails.css" rel="stylesheet" />
 
@@ -14,7 +15,6 @@
         @await Component.InvokeAsync("FlexMenu")
     </nav>
     <div class="content">
-
         @if(Model.CatSlider != null)
         {
             <div class="categoryInfo" style="width: 100%;">
@@ -38,22 +38,22 @@
 
                 <div class="product-image">
                     <div class="inline-image">
-                        <img class="inline-image-block" src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@Model.FileName" alt="Product Image">
+                        <img class="inline-image-block" src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@Model.FileName" alt="Product Image" onclick="openModal('https://zovprofil.by/Images/ClientsCatalogImages/@Model.FileName')">
                         @if (Model.techStoreFileName != null)
                         {
-                            <img class="inline-image-block" src="https://zovprofil.by/Images/TechStore/@Model.techStoreFileName" alt="Product Image">
+                            <img class="inline-image-block" src="https://zovprofil.by/Images/TechStore/@Model.techStoreFileName" alt="Product Image" onclick="openModal('https://zovprofil.by/Images/TechStore/@Model.techStoreFileName')">
                         }
                     </div>
 
                     <div class="swiper swiper-main swiper-flag" rewind="true">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@Model.FileName" alt="Product Image">
+                                <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@Model.FileName" alt="Product Image" onclick="openModal('https://zovprofil.by/Images/ClientsCatalogImages/@Model.FileName')">
                             </div>
                             @if (Model.techStoreFileName != null)
                             {
                                 <div class="swiper-slide">
-                                    <img src="https://zovprofil.by/Images/TechStore/@Model.techStoreFileName" alt="Product Image">
+                                    <img src="https://zovprofil.by/Images/TechStore/@Model.techStoreFileName" alt="Product Image" onclick="openModal('https://zovprofil.by/Images/TechStore/@Model.techStoreFileName')">
                                 </div>
                             }
                         </div>
@@ -93,11 +93,11 @@
             </div>
             @if(Model.ProductType == 0)
             {
-                <div class="relatedFronts">
-                    @await Component.InvokeAsync("RelatedFronts", new { matrixId = Model.MatrixId })
+                <div id="relatedFronts">
+                    @await Component.InvokeAsync("RelatedFronts", new { matrixId = Model.MatrixId, name = Model.Name })
                 </div>
 
-                <div class="relatedDecors">
+                <div id="relatedDecors">
                     @await Component.InvokeAsync("RelatedDecors", new { matrixId = Model.MatrixId })
                 </div>
             }
@@ -106,8 +106,61 @@
             @await Component.InvokeAsync("PromotionalBlock")
         </div>
     </div>
+
+
+
+    <div class="modal" id="imageModal">
+        <span class="close" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+
+
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="~/js/swiper.js"></script>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function setMaxHeightInContainer(containerSelector) {
+            const container = document.querySelector(containerSelector);
+            if (!container) return;
+
+            const blocks = container.querySelectorAll('.block');
+            let maxHeight = 0;
+
+            blocks.forEach(function (block) {
+                const blockHeight = block.offsetHeight;
+                if (blockHeight > maxHeight) {
+                    maxHeight = blockHeight;
+                }
+            });
+
+            blocks.forEach(function (block) {
+                block.style.height = maxHeight + 'px';
+            });
+        }
+
+        window.openModal = function(imageSrc) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImage");
+            modal.style.display = "block";
+            modalImg.src = encodeURI(imageSrc);
+        };
+
+        document.getElementById("closeModal").onclick = function() {
+            document.getElementById("imageModal").style.display = "none";
+        };
+
+        document.getElementById("imageModal").onclick = function(event) {
+            if (event.target === this) {
+                this.style.display = "none";
+            }
+        };
+
+        setMaxHeightInContainer('#relatedFronts');
+        setMaxHeightInContainer('#relatedDecors');
+    });
+</script>

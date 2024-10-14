@@ -3,6 +3,8 @@
 @{
     var sanitizer = new HtmlSanitizer();
     sanitizer.AllowedTags.Add("br");
+    ViewBag.Title = "Каталог";
+
 }
 <link rel="stylesheet" href="~/css/production.css" />
 
@@ -47,41 +49,20 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        function adjustCard(card) {
-            const img = card.querySelector('img');
-            const text = card.querySelector('p');
-            const maxCardHeight = 310;
-            const initialCardHeight = 275;
-            const initialFontSize = 18;
+        document.addEventListener("DOMContentLoaded", function () {
+            const blocks = document.querySelectorAll('.block');
+        let maxHeight = 0;
 
-            let cardHeight = initialCardHeight;
-            let fontSize = initialFontSize;
-            let isAdjusted = false;
+        blocks.forEach(function (block) {
+                const blockHeight = block.offsetHeight;
+                if (blockHeight > maxHeight) {
+            maxHeight = blockHeight;
+                }
+            });
+        console.log(maxHeight);
 
-            const imgHeight = img.clientHeight;
-            const textHeight = text.scrollHeight;
-            const availableHeight = card.clientHeight - imgHeight;
-
-            while (textHeight > availableHeight && fontSize > 14) {
-                fontSize -= 1;
-                text.style.fontSize = fontSize + 'px';
-                isAdjusted = true;
-            }
-
-            while (textHeight > availableHeight && cardHeight < maxCardHeight) {
-                cardHeight += 5;
-                card.style.height = cardHeight + 'px';
-                isAdjusted = true;
-            }
-
-            if (!isAdjusted) {
-                text.style.fontSize = initialFontSize + 'px';
-                card.style.height = initialCardHeight + 'px';
-            }
-        }
-
-        const cards = document.querySelectorAll('.block');
-        cards.forEach(card => adjustCard(card));
-    });
+        blocks.forEach(function (block) {
+            block.style.height = maxHeight + 'px';
+            });
+        });
 </script>
