@@ -27,7 +27,7 @@ namespace MVC.Components
             foreach (int type in types.Keys)
             {
                 var categories = await _dbContext.Products
-                    .Where(product => product.ProductType==type && product.ToSite==true)
+                    .Where(product => product.ProductType==type && product.ToSite==true && !product.Category.Contains("Эксклюзив ZOV"))
                     .Select(product => product.Category)
                     .Distinct()
                     .OrderBy(x => x)

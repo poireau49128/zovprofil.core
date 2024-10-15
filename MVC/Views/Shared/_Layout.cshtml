@@ -70,7 +70,7 @@
 					<div style="margin: auto;">+375 (152) 60-81-63</div>
 				</div>
 
-				<a href="http://www.wm-shop.by/" onclick="ymetr()" target="_blank">
+				<a href="https://wellmaker.deal.by/" onclick="ymetr()" target="_blank">
 					<div class="button-shop">
 						<img src="~/img/cart.png" alt="" />
 						<div style="margin: auto;">ИНТЕРНЕТ-МАГАЗИН</div>
@@ -94,7 +94,7 @@
 							<li class="menu-tablet"><a href="@Url.Action("About", "Nav")">О компании</a></li>
 							<li class="menu-tablet"><a href="@Url.Action("Contacts", "Nav")">Контакты</a></li>
 							<li class="but menu-buttons">
-								<a href="http://www.wm-shop.by/" onclick="ymetr()" target="_blank" style="display: flex; flex-direction: row;">
+								<a href="https://wellmaker.deal.by/" onclick="ymetr()" target="_blank" style="display: flex; flex-direction: row;">
 									<img src="~/img/cart.png" alt="" />
 									<div style="color: white">ИНТЕРНЕТ-МАГАЗИН</div>
 								</a>
@@ -196,23 +196,151 @@
     </footer>
 
 
+    <div id="MessageDialogModal" class="modal">
+        <div class="modal-content">
+            <form id="contactForm" method="post" action="/Nav/SendEmail">
+                @Html.AntiForgeryToken() <!-- Генерация CSRF токена -->
+                <div class="info">
+                    <div class="info-block">
+                        <span class="text-span">ФИО*</span>
+                        <input id="NameInput" type="text" class="name-input" />
+                    </div>
+                    <div class="info-block">
+                        <span class="text-span">Название компании</span>
+                        <input id="CompanyInput" type="text" class="name-input" />
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="info-block">
+                        <span class="text-span">Email*</span>
+                        <input id="EmailInput" type="text" class="name-input" />
+                    </div>
+                    <div class="info-block">
+                        <span class="text-span">Телефон</span>
+                        <input id="PhoneInput" type="text" class="name-input" />
+                    </div>
+                </div>
+                <div style="clear:left; margin-top:20px">
+                    <span class="text-span">Тип компании*</span>
+                    <div class="radio-wrapper">
+                        <div class="radio-button">
+                            <input type="radio" id="FRadio" name="type" value="F" checked="checked" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Физ. лицо</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" id="RRadio" name="type" value="R" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Розница</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" id="MRadio" name="type" value="M" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Мелкий опт</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" id="KRadio" name="type" value="K" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Крупный опт</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" id="DRadio" name="type" value="D" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Диз. студия</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="clear:left; margin-top:20px">
+                    <span class="text-span">Интересующая продукция*</span>
+                    <div class="radio-wrapper">
+                        <div class="radio-button">
+                            <input type="radio" id="PRadio" name="prod" value="P" checked="checked" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Профиль</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" id="FrRadio" name="prod" value="Fr" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Фасады</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" id="MeRadio" name="prod" value="Me" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Мебель</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" id="IRadio" name="prod" value="I" />
+                            <label for="PersonRadio" style="font-family:OpenSans-Regular; font-size:15px; font-weight:100; margin-left:5px;">Интерьерные панели</label>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:left">
+                    <span style="display:block; margin-top:10px">Текст</span>
+                    <textarea id="TextInput" class="text-input"></textarea>
+                </div>
+
+                <div style="padding-top:15px; text-align:center; width:100%;">
+                    <div style="display:inline-block">
+                        <div id="SendButton" class="sendbutton" onclick="SendMessage()">Отправить</div>
+                        <span class="cancelbutton" onclick="hideModal()">Отмена</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 	<script>
+        function SendMessage() {
 
-	</script>
+            var name = document.getElementById("NameInput").value;
+            var company = document.getElementById("CompanyInput").value;
+            var email = document.getElementById("EmailInput").value;
+            var phone = document.getElementById("PhoneInput").value;
+            var type = document.querySelector('input[name="type"]:checked').value;
+            var product = document.querySelector('input[name="prod"]:checked').value;
+            var text = document.getElementById("TextInput").value;
 
 
-	<script>
-		function hideModal() {
+            if (!name || !email) {
+                alert("Пожалуйста, заполните обязательные поля: ФИО и Email");
+                return;
+            }
+
+            var data = {
+                Name: name,
+                Company: company,
+                Email: email,
+                Phone: phone,
+                Type: type,
+                Product: product,
+                Text: text
+            };
+
+            fetch('/Nav/SendEmail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value // CSRF защита
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    alert('Сообщение отправлено успешно!');
+                    hideModal();
+                } else {
+                    alert('Произошла ошибка при отправке сообщения.');
+                }
+            }).catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке сообщения.');
+            });
+        }
+
+        function hideModal() {
+            document.getElementById('MessageDialogModal').style.display = 'none';
+        }
+
+		function showModal() {
+			console.log("showModal");
 			var modal = document.getElementById("MessageDialogModal");
-			modal.style.display = "none";
-		}
-	function showModal() {
-		console.log("showModal");
-		var modal = document.getElementById("MessageDialogModal");
-		modal.style.display = "block";
+			modal.style.display = "block";
 
-		$('.header-burger, .menu-overlay').removeClass('active');
-		}
+			$('.header-burger, .menu-overlay').removeClass('active');
+			}
 	</script>
 
 

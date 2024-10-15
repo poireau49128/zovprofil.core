@@ -28,7 +28,7 @@ namespace MVC.Controllers
             }
             else if (isBasic == true)
             {
-                if(productType == 0)
+                if(productType == 0 || productType == 4)
                 {
                     products = await BasicProducts(productType, category, isBasic);
                     ViewBag.Operation = "BasicProducts";
@@ -50,7 +50,7 @@ namespace MVC.Controllers
         private async Task<List<Product>> UniqueCategories(int productType)
         {
             var query = _dbContext.Products
-                                    .Where(p => p.ProductType == productType && p.ToSite == true)
+                                    .Where(p => p.ProductType == productType && p.ToSite == true && !p.Category.Contains("Эксклюзив ZOV"))
                                     .GroupBy(p => p.Category)
                                     .Select(group => group.First(p => p.Basic == true) ?? group.First());
             List<Product> uniqueCategories = await query.ToListAsync();
@@ -188,12 +188,16 @@ namespace MVC.Controllers
                                                     FileName = p.FileName
                                                 })
                                                 .ToListAsync();
-
-            var fileNames = filesAndDescriptions.Select(f => f.FileName).ToList();
-            var nonEmptyDescription = filesAndDescriptions
-                                        .Select(f => f.Description)
-                                        .FirstOrDefault(d => !string.IsNullOrEmpty(d));
-            return Tuple.Create(nonEmptyDescription, fileNames);
+            if (filesAndDescriptions.Any())
+            {
+                var fileNames = filesAndDescriptions.Select(f => f.FileName).ToList();
+                var nonEmptyDescription = filesAndDescriptions
+                                            .Select(f => f.Description)
+                                            .FirstOrDefault(d => !string.IsNullOrEmpty(d));
+                return Tuple.Create(nonEmptyDescription, fileNames);
+            }
+            return null;
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

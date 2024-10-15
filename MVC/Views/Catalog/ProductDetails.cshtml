@@ -93,11 +93,11 @@
             </div>
             @if(Model.ProductType == 0)
             {
-                <div id="relatedFronts">
+                <div id="relatedFronts" style="margin-top: 50px;">
                     @await Component.InvokeAsync("RelatedFronts", new { matrixId = Model.MatrixId, name = Model.Name })
                 </div>
 
-                <div id="relatedDecors">
+                <div id="relatedDecors" style="margin-top: 50px;">
                     @await Component.InvokeAsync("RelatedDecors", new { matrixId = Model.MatrixId })
                 </div>
             }
