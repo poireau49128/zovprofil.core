@@ -26,9 +26,10 @@ namespace MVC.Controllers
 			_dbContext = dbContext;
 			_dbContextProduct = dbProdContext;
             _logger = logger;
-            _logger.LogInformation("YourController is being initialized.");
         }
-		public async Task<IActionResult> News()
+
+        [Route("news")]
+        public async Task<IActionResult> News()
 		{
 			var newsList = await _dbContext.News
 			.OrderByDescending(n => n.DateTime)
@@ -37,7 +38,8 @@ namespace MVC.Controllers
 			return View(newsList);
 		}
 
-		public async Task<IActionResult> WhereToBuy(bool isFronts, bool isProfile, bool isFurniture, string city, string country = "Беларусь")
+        [Route("where-to-buy")]
+        public async Task<IActionResult> WhereToBuy(bool isFronts, bool isProfile, bool isFurniture, string city, string country = "Беларусь")
 		{
             IQueryable<Dealer> dealers =  _dbContext.Dealers
 									.Where(d => d.Lat!=null && d.Long!=null && d.Country!=null && d.Name!=null)
@@ -80,7 +82,8 @@ namespace MVC.Controllers
             
         }
 
-		public async Task<IActionResult> Downloads()
+        [Route("downloads")]
+        public async Task<IActionResult> Downloads()
 		{
             var documents = await _dbContext.Documents.ToListAsync();
 
@@ -99,12 +102,14 @@ namespace MVC.Controllers
             return View(documents);
         }
 
-		public IActionResult About()
+        [Route("about")]
+        public IActionResult About()
 		{
 			return View();
 		}
 
-		public async Task<IActionResult> Contacts()
+        [Route("contacts")]
+        public async Task<IActionResult> Contacts()
 		{
             var sectionsWithContacts = await _dbContext.Sections
 														.Include(s => s.Contacts)
@@ -112,6 +117,7 @@ namespace MVC.Controllers
 
             return View(sectionsWithContacts);
         }
+
         public async Task<IActionResult> Main()
         {
 			var latestList = await _dbContextProduct.Products
@@ -128,12 +134,10 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SendEmail([FromBody] EmailModel model)
         {
-            // Проверяем, валидны ли данные модели
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Настройка SMTP-клиента
                     var smtpClient = new SmtpClient("smtp.gmail.com")
                     {
                         Port = 587,
@@ -141,7 +145,6 @@ namespace MVC.Controllers
                         EnableSsl = true,
                     };
 
-                    // Создаем сообщение электронной почты
                     var mailMessage = new MailMessage
                     {
                         From = new MailAddress("notify.infinium@gmail.com"),
@@ -157,10 +160,8 @@ namespace MVC.Controllers
                         IsBodyHtml = false,
                     };
 
-                    // Добавляем получателя
                     mailMessage.To.Add("marketing@omcprofil.by");
 
-                    // Отправляем письмо
                     smtpClient.Send(mailMessage);
 
                     _logger.LogInformation("Email sent successfully from {EmailFrom} to {EmailTo}. Subject: {Subject}",
@@ -172,19 +173,15 @@ namespace MVC.Controllers
                 }
                 catch (SmtpException smtpEx)
                 {
-                    // Логируем ошибку SMTP
                     _logger.LogError(smtpEx, "SMTP error occurred while sending email.");
                     return StatusCode(500, "Ошибка SMTP при отправке письма: " + smtpEx.Message);
                 }
                 catch (Exception ex)
                 {
-                    // Логируем любую другую ошибку
                     _logger.LogError(ex, "Unexpected error occurred while sending email.");
                     return StatusCode(500, "Ошибка при отправке письма: " + ex.Message);
                 }
             }
-
-            // Логируем сообщение об ошибке валидации
             _logger.LogWarning("Invalid model state: {ModelState}", ModelState);
             return BadRequest("Неверные данные");
         }

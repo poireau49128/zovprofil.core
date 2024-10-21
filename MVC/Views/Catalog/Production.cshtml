@@ -1,5 +1,6 @@
 ﻿@model List<Product>
 @using Ganss.Xss
+@using MVC.Helpers
 @{
     var sanitizer = new HtmlSanitizer();
     sanitizer.AllowedTags.Add("br");
@@ -17,7 +18,15 @@
         {
             if (ViewBag.Operation == "UniqueCategories")
             {
-                <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType asp-route-isBasic=true class="block">
+                TempData["isBasic"] = true;
+
+                @* <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType class="block">
+                    <div class="block-img">
+                        <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
+                    </div>
+                    <p>@product.Category</p>
+                </a> *@
+                <a asp-action="Production" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(product.Category) asp-route-productType=@product.ProductType class="block">
                     <div class="block-img">
                         <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
                     </div>
@@ -35,12 +44,24 @@
             }
             else if (ViewBag.Operation == "GroupedProducts")
             {
-                <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType asp-route-isBasic=false asp-route-name=@product.Name.Split(' ')[0] class="block">
+                TempData["isBasic"] = false;
+                @* <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType asp-route-name=@product.Name.Split(' ')[0] class="block">
                     <div class="block-img">
                         <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
                     </div>
                     <p>@product.Name.Split(' ')[0]</p>
+                </a> *@
+                <a asp-action="Production"
+                   asp-route-categoryTranslit="@TransliterationHelper.ToLatin(product.Category)"
+                   asp-route-productType="@product.ProductType"
+                   asp-route-nameTranslit="@TransliterationHelper.ToLatin(product.Name.Split(' ')[0])"
+                   class="block">
+                    <div class="block-img">
+                        <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@product.FileName" alt="">
+                    </div>
+                    <p>@product.Name.Split(' ')[0]</p>
                 </a>
+
             }
             
         }

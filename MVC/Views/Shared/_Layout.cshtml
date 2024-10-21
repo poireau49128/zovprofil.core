@@ -126,7 +126,7 @@
 				<a href="@Url.Action("Main", "Nav")" class="item">
 					<div class="nav-main" runat="server">Главная</div>
 				</a>
-				<a href="@Url.Action("Production", "Catalog")" class="item">
+                <a href="@Url.Action("Production", "Catalog", new { productType = 0 })" class="item">
 					<div class="nav-catalog" runat="server">Каталог</div>
 				</a>
 				<a href="@Url.Action("News", "Nav")" class="item mobile">

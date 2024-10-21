@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using MVC.Helpers;
 using MVC.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,11 +19,19 @@ namespace MVC.Controllers
         {
             _dbContext = dbContext;
         }
-		public async Task<IActionResult> Production(string category, bool isBasic, string name, int productType = 0)
+
+        [Route("catalog/{productType}/{categoryTranslit?}/{nameTranslit?}")]
+        public async Task<IActionResult> Production(string categoryTranslit, /*bool isBasic,*/ string nameTranslit, int productType = 0)
         {
+            bool isBasic = TempData["isBasic"] != null ? (bool)TempData["isBasic"] : false;
+
+            string category = TransliterationHelper.ToCyrillic(categoryTranslit);
+            string name = TransliterationHelper.ToCyrillic(nameTranslit);
+
+
             List<Product> products;
             var test = ViewBag.Operation;
-            if (category == null)
+            if (category.IsNullOrEmpty())
             {
                 products = await UniqueCategories(productType);
                 ViewBag.Operation = "UniqueCategories";
@@ -83,6 +93,7 @@ namespace MVC.Controllers
             return groupedProducts;
         }
 
+        [Route("catalog/details/{imageId}")]
         public async Task<IActionResult> ProductDetails(long imageId)
         {
             ProductDetailsViewModel? product = await _dbContext.Products
