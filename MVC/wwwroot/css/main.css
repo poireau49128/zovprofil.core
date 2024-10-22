@@ -178,18 +178,25 @@ button:hover{
 
 .categories {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    column-gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: start;
+    column-gap: 20px;
+    row-gap: 20px;
 }
 
 .category {
-    justify-self: center;
+    margin: -10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    /*justify-self: center;
     text-align: center;
     max-width: 550px;
     margin-bottom: 30px;
     align-items: start;
-    width: 100%;
+    width: 100%;*/
 }
 
     .category img {

@@ -4,7 +4,6 @@ using MVC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ProductDbContext>(
@@ -14,11 +13,9 @@ builder.Services.AddDbContext<MarketingDbContext>(
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Catalog/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -31,7 +28,40 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    //pattern: "{controller=Catalog}/{action=Production}/{id?}");
-    pattern: "{controller=Nav}/{action=Main}/{id?}");
+    pattern: "{controller=Nav}/{action=Main}"
+);
+
+// Редирект со старых адресов
+//app.MapControllerRoute(
+//    name: "oldType",
+//    pattern: "Production",
+//    defaults: new { controller = "Catalog", action = "Production" }
+//);
+
+//app.MapControllerRoute(
+//    name: "oldCategory",
+//    pattern: "Production/{type}/{category}",
+//    defaults: new { controller = "Catalog", action = "Production" }
+//);
+
+//app.MapControllerRoute(
+//    name: "oldCategoryProduct",
+//    pattern: "Production/{type?}/{category?}/{item}",
+//    defaults: new { controller = "Catalog", action = "ProductDetails" },
+//    constraints: new { item = @"\d+" }
+//);
+
+//app.MapControllerRoute(
+//    name: "oldSubCategory",
+//    pattern: "Production/{type}/{category}/{subcategory}",
+//    defaults: new { controller = "Catalog", action = "Production" }
+//);
+
+//app.MapControllerRoute(
+//    name: "oldSubcategoryProduct",
+//    pattern: "Production/{typ?}/{category?}/{subcategory?}/{item}",
+//    defaults: new { controller = "Catalog", action = "ProductDetails" }
+//);
+
 
 app.Run();

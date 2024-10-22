@@ -1,4 +1,5 @@
-﻿@model Dictionary<List<string>, List<string>>
+﻿@using MVC.Helpers
+@model Dictionary<List<string>, List<string>>
 
 <link href="~/css/flexMenu.css" rel="stylesheet" />
 
@@ -14,7 +15,7 @@
                 <span style="width: 100%; display: flex; justify-content: space-between;">
                     <div style="display: flex; gap: 5px; align-items: center;">
                         <img src="/img/@type.Key[2]" / style="width: 20px; height: 20px;">
-                        <a class="dropdown-toggle" asp-action="Production" asp-controller="Catalog" asp-route-productType=@type.Key[0]>
+                        <a class="dropdown-toggle" asp-action="Production" asp-controller="Catalog" asp-route-productType=@type.Key[0] asp-route-productType=@type.Key[0] asp-route-categoryTranslit=@null>
                             @type.Key[1]
                         </a>
                     </div>
@@ -25,7 +26,8 @@
                 <span class="drop-menu">
                     @foreach (var category in type.Value)
                     {
-                        <a class="dropdown-item" asp-action="Production" asp-controller="Catalog" asp-route-category=@category asp-route-productType=@type.Key[0] asp-route-isBasic=true>@category</a>
+                        TempData["isBasic"] = true;
+                        <a class="dropdown-item" asp-action="Production" asp-controller="Catalog" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(category) asp-route-productType=@type.Key[0]>@category</a>
                     }
                     @if(type.Key[0] == "0"){
                         <hr style="width: 100%;"/>

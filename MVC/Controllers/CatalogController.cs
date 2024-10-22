@@ -38,7 +38,7 @@ namespace MVC.Controllers
             }
             else if (isBasic == true)
             {
-                if(productType == 0 || productType == 4)
+                if(productType == 0/* || productType == 4*/)
                 {
                     products = await BasicProducts(productType, category, isBasic);
                     ViewBag.Operation = "BasicProducts";
@@ -54,6 +54,8 @@ namespace MVC.Controllers
                 ViewBag.Operation = "BasicProducts";
             }
 
+
+            ViewBag.CatSlider = await GetCategorySlider(category);
             return View(products);
         }
 
@@ -76,7 +78,7 @@ namespace MVC.Controllers
                                                 && p.Basic == isBasic 
                                                 && p.ToSite == true 
                                                 && (name == null || p.Name.StartsWith(name)))
-                                    .OrderBy(p => p.Color);
+                                    .OrderBy(p => name != null ? p.Name : p.Color);
             List<Product> basicProducts = await query.ToListAsync();
             return basicProducts;
         }

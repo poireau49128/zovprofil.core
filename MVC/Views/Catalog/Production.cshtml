@@ -8,24 +8,42 @@
 
 }
 <link rel="stylesheet" href="~/css/production.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <div class="container">
     <nav>
         @await Component.InvokeAsync("FlexMenu")
     </nav>
-    <div class="content">
+    <div class="catslider">
+        
+    </div>
+    <div class="content" id="content">
+        @{
+            var CatSlider = ViewBag.CatSlider;
+        }
+        @if (CatSlider != null)
+        {
+            <div class="categoryInfo" style="width: 100%;">
+                <div class="swiper swiper-main" rewind="true">
+                    <div class="swiper-wrapper">
+                        @foreach (var fileName in CatSlider.Item2)
+                        {
+                            <div class="swiper-slide" style="height: 90%;">
+                                <img style="width: 100%; height: 100%; object-fit: cover;" src="https://zovprofil.by/Images/ClientsCatalogImages/@fileName" alt="Alternate Text" />
+                            </div>
+                        }
+                    </div>
+                    <div class="swiper-scrollbar"></div>
+                </div>
+                <p>@Html.Raw(sanitizer.Sanitize(@CatSlider.Item1))</p>
+            </div>
+        }
+
         @foreach (var product in Model)
         {
             if (ViewBag.Operation == "UniqueCategories")
             {
                 TempData["isBasic"] = true;
-
-                @* <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType class="block">
-                    <div class="block-img">
-                        <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
-                    </div>
-                    <p>@product.Category</p>
-                </a> *@
                 <a asp-action="Production" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(product.Category) asp-route-productType=@product.ProductType class="block">
                     <div class="block-img">
                         <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
@@ -45,12 +63,6 @@
             else if (ViewBag.Operation == "GroupedProducts")
             {
                 TempData["isBasic"] = false;
-                @* <a asp-action="Production" asp-route-category=@product.Category asp-route-productType=@product.ProductType asp-route-name=@product.Name.Split(' ')[0] class="block">
-                    <div class="block-img">
-                        <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
-                    </div>
-                    <p>@product.Name.Split(' ')[0]</p>
-                </a> *@
                 <a asp-action="Production"
                    asp-route-categoryTranslit="@TransliterationHelper.ToLatin(product.Category)"
                    asp-route-productType="@product.ProductType"
@@ -69,7 +81,7 @@
 </div>
 
 
-<script>
+@* <script>
         document.addEventListener("DOMContentLoaded", function () {
             const blocks = document.querySelectorAll('.block');
         let maxHeight = 0;
@@ -86,4 +98,79 @@
             block.style.height = maxHeight + 'px';
             });
         });
+</script>
+ *@
+@* <script>
+    console.log("1");
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("2");
+        const blocks = document.querySelectorAll('.block');
+
+        function setMaxHeight() {
+            console.log("3");
+            let maxHeight = 0;
+
+            blocks.forEach(function (block) {
+                const blockHeight = block.offsetHeight;
+                if (blockHeight > maxHeight) {
+                    maxHeight = blockHeight;
+                }
+            });
+
+            blocks.forEach(function (block) {
+                block.style.height = maxHeight + 'px';
+            });
+        }
+        console.log("4");
+        const images = document.querySelectorAll('.block-img img');
+        let loadedImagesCount = 0;
+
+        images.forEach(function (img) {
+            img.addEventListener('load', function () {
+                console.log("5");
+                loadedImagesCount++;
+                if (loadedImagesCount === images.length) {
+                    setMaxHeight();
+                }
+            });
+            if (img.complete) {
+                loadedImagesCount++;
+            }
+        });
+
+        if (images.length === 0) {
+            setMaxHeight();
+        }
+    });
+</script>
+ *@
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="~/js/swiper.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function setMaxHeightInContainer(containerSelector) {
+            console.log("1");
+            const container = document.querySelector(containerSelector);
+            if (!container) return;
+            console.log("12");
+            const blocks = container.querySelectorAll('.block');
+            let maxHeight = 0;
+
+            blocks.forEach(function (block) {
+                
+                const blockHeight = block.offsetHeight;
+                console.log(blockHeight, maxHeight);
+                if (blockHeight > maxHeight) {
+                    maxHeight = blockHeight;
+                }
+            });
+
+            blocks.forEach(function (block) {
+                block.style.height = maxHeight + 'px';
+            });
+        }
+
+        setMaxHeightInContainer('#content');
+    });
 </script>
