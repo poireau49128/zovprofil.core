@@ -43,7 +43,7 @@
         {
             if (ViewBag.Operation == "UniqueCategories")
             {
-                <a asp-action="Production" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(product.Category) asp-route-productType=@product.ProductType asp-route-isBasic=@true class="block">
+                <a asp-action="Production" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(product.Category) asp-route-productTypeTranslit=@TransliterationHelper.ProdutTypeIntToString(product.ProductType) asp-route-isBasic=@true class="block">
                     <div class="block-img">
                         <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
                     </div>
@@ -63,7 +63,7 @@
             {
                 <a asp-action="Production"
                    asp-route-categoryTranslit="@TransliterationHelper.ToLatin(product.Category)"
-                   asp-route-productType="@product.ProductType"
+                   asp-route-productTypeTranslit=@TransliterationHelper.ProdutTypeIntToString(product.ProductType)
                    asp-route-nameTranslit="@TransliterationHelper.ToLatin(product.Name.Split(' ')[0])"
                    asp-route-isBasic=@false
                    class="block">

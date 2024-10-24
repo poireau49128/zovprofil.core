@@ -21,12 +21,14 @@ namespace MVC.Controllers
             _dbContext = dbContext;
         }
 
-        [Route("catalog/{productType}/{categoryTranslit?}/{nameTranslit?}")]
-        public async Task<IActionResult> Production(string categoryTranslit, bool isBasic, string nameTranslit, int productType = 0)
+
+
+        [Route("catalog/{productTypeTranslit}/{categoryTranslit?}/{nameTranslit?}")]
+        public async Task<IActionResult> Production(string categoryTranslit, bool isBasic, string nameTranslit/*, int productType=0*/, string productTypeTranslit = "facade")
         {
             string category = TransliterationHelper.ToCyrillic(categoryTranslit);
             string name = TransliterationHelper.ToCyrillic(nameTranslit);
-
+            int productType = TransliterationHelper.ProdutTypeStringToInt(productTypeTranslit);
 
             List<Product> products;
             if (category.IsNullOrEmpty())

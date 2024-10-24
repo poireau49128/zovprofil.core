@@ -1,5 +1,7 @@
-using Microsoft.EntityFrameworkCore;
+Ôªøusing Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using MVC.Helpers;
 using MVC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +33,62 @@ app.MapControllerRoute(
     pattern: "{controller=Nav}/{action=Main}"
 );
 
-// –Â‰ËÂÍÚ ÒÓ ÒÚ‡˚ı ‡‰ÂÒÓ‚
+
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/Production", async context =>
+    {
+        var query = context.Request.Query;
+
+        var type = query["type"].ToString();
+        var cat = query["cat"].ToString();
+        var subcat = query["subcat"].ToString();
+        var item = query["item"].ToString();
+
+        bool isTypeValid = !string.IsNullOrEmpty(type);
+        bool isCatValid = !string.IsNullOrEmpty(cat);
+        bool isSubCatValid = !string.IsNullOrEmpty(subcat);
+        bool isItemValid = !string.IsNullOrEmpty(item);
+
+        bool isBasic;
+
+        if (isTypeValid)
+        {
+            string newUrl = $"/catalog/{@TransliterationHelper.ProdutTypeIntToString(int.Parse(type))}";
+            if (isCatValid)
+            {
+                newUrl = $"/catalog/{@TransliterationHelper.ProdutTypeIntToString(int.Parse(type))}/{@TransliterationHelper.ToLatin(cat)}";
+                if (isSubCatValid)
+                {
+                    newUrl = $"/catalog/{@TransliterationHelper.ProdutTypeIntToString(int.Parse(type))}/{@TransliterationHelper.ToLatin(cat)}/{@TransliterationHelper.ToLatin(subcat)}";
+                    if (isItemValid)
+                    {
+                        newUrl = $"/catalog/details/{item}";
+                    } 
+                }
+                else if (isItemValid)
+                {
+                    newUrl = $"/catalog/details/{item}";
+                }
+            }
+            context.Response.Redirect(newUrl);
+        }
+        else
+        {
+            context.Response.StatusCode = 400; // Bad Request
+            await context.Response.WriteAsync("Invalid or missing parameters");
+        }
+    });
+
+    // Other routes
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Nav}/{action=Main}");
+});
+
+// √ê√•√§√®√∞√•√™√≤ √±√Æ √±√≤√†√∞√ª√µ √†√§√∞√•√±√Æ√¢
 //app.MapControllerRoute(
 //    name: "oldType",
 //    pattern: "Production",
