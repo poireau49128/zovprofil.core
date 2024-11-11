@@ -92,14 +92,12 @@ nav {
         }
         .swiper-flag {
             display: block !important;
-            height: 60vw;
+            
         }
-        .swiper-flag img {
-            max-height: 90%;
-            max-width: 90%;
-            height: auto;
-            width: auto;
-        }
+            .swiper-flag img {
+                width: 70vw;
+                height: auto;
+            }
 }
 
 
