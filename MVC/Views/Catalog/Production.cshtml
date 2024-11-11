@@ -43,8 +43,7 @@
         {
             if (ViewBag.Operation == "UniqueCategories")
             {
-                TempData["isBasic"] = true;
-                <a asp-action="Production" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(product.Category) asp-route-productType=@product.ProductType class="block">
+                <a asp-action="Production" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(product.Category) asp-route-productTypeTranslit=@TransliterationHelper.ProdutTypeIntToString(product.ProductType) asp-route-isBasic=@true class="block">
                     <div class="block-img">
                         <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs//@product.FileName" alt="">
                     </div>
@@ -62,115 +61,53 @@
             }
             else if (ViewBag.Operation == "GroupedProducts")
             {
-                TempData["isBasic"] = false;
                 <a asp-action="Production"
                    asp-route-categoryTranslit="@TransliterationHelper.ToLatin(product.Category)"
-                   asp-route-productType="@product.ProductType"
+                   asp-route-productTypeTranslit=@TransliterationHelper.ProdutTypeIntToString(product.ProductType)
                    asp-route-nameTranslit="@TransliterationHelper.ToLatin(product.Name.Split(' ')[0])"
+                   asp-route-isBasic=@false
                    class="block">
                     <div class="block-img">
                         <img src="https://zovprofil.by/Images/ClientsCatalogImages/Thumbs/@product.FileName" alt="">
                     </div>
-                    <p>@product.Name.Split(' ')[0]</p>
+                    @if (product.Category == "Столы")
+                    {
+                        <p>@Html.Raw(sanitizer.Sanitize(product.Name))</p>
+                    }
+                    else
+                    {
+                        <p>@product.Name.Split(' ')[0]</p>
+                    }
                 </a>
-
             }
             
         }
     </div>
 </div>
 
-
-@* <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const blocks = document.querySelectorAll('.block');
-        let maxHeight = 0;
-
-        blocks.forEach(function (block) {
-                const blockHeight = block.offsetHeight;
-                if (blockHeight > maxHeight) {
-            maxHeight = blockHeight;
-                }
-            });
-        console.log(maxHeight);
-
-        blocks.forEach(function (block) {
-            block.style.height = maxHeight + 'px';
-            });
-        });
-</script>
- *@
-@* <script>
-    console.log("1");
-    document.addEventListener("DOMContentLoaded", function () {
-        console.log("2");
-        const blocks = document.querySelectorAll('.block');
-
-        function setMaxHeight() {
-            console.log("3");
-            let maxHeight = 0;
-
-            blocks.forEach(function (block) {
-                const blockHeight = block.offsetHeight;
-                if (blockHeight > maxHeight) {
-                    maxHeight = blockHeight;
-                }
-            });
-
-            blocks.forEach(function (block) {
-                block.style.height = maxHeight + 'px';
-            });
-        }
-        console.log("4");
-        const images = document.querySelectorAll('.block-img img');
-        let loadedImagesCount = 0;
-
-        images.forEach(function (img) {
-            img.addEventListener('load', function () {
-                console.log("5");
-                loadedImagesCount++;
-                if (loadedImagesCount === images.length) {
-                    setMaxHeight();
-                }
-            });
-            if (img.complete) {
-                loadedImagesCount++;
-            }
-        });
-
-        if (images.length === 0) {
-            setMaxHeight();
-        }
-    });
-</script>
- *@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="~/js/swiper.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         function setMaxHeightInContainer(containerSelector) {
-            console.log("1");
             const container = document.querySelector(containerSelector);
             if (!container) return;
-            console.log("12");
+
             const blocks = container.querySelectorAll('.block');
             let maxHeight = 0;
 
             blocks.forEach(function (block) {
                 
                 const blockHeight = block.offsetHeight;
-                console.log(blockHeight, maxHeight);
                 if (blockHeight > maxHeight) {
                     maxHeight = blockHeight;
                 }
             });
-
             blocks.forEach(function (block) {
                 block.style.height = maxHeight + 'px';
             });
         }
-
         setMaxHeightInContainer('#content');
     });
 </script>

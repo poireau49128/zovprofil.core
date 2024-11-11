@@ -8,6 +8,7 @@ using MVC.Helpers;
 using MVC.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Windows;
 
 namespace MVC.Controllers
@@ -20,17 +21,16 @@ namespace MVC.Controllers
             _dbContext = dbContext;
         }
 
-        [Route("catalog/{productType}/{categoryTranslit?}/{nameTranslit?}")]
-        public async Task<IActionResult> Production(string categoryTranslit, /*bool isBasic,*/ string nameTranslit, int productType = 0)
-        {
-            bool isBasic = TempData["isBasic"] != null ? (bool)TempData["isBasic"] : false;
 
+
+        [Route("catalog/{productTypeTranslit}/{categoryTranslit?}/{nameTranslit?}")]
+        public async Task<IActionResult> Production(string categoryTranslit, bool isBasic, string nameTranslit/*, int productType=0*/, string productTypeTranslit = "facade")
+        {
             string category = TransliterationHelper.ToCyrillic(categoryTranslit);
             string name = TransliterationHelper.ToCyrillic(nameTranslit);
-
+            int productType = TransliterationHelper.ProdutTypeStringToInt(productTypeTranslit);
 
             List<Product> products;
-            var test = ViewBag.Operation;
             if (category.IsNullOrEmpty())
             {
                 products = await UniqueCategories(productType);
@@ -38,7 +38,7 @@ namespace MVC.Controllers
             }
             else if (isBasic == true)
             {
-                if(productType == 0/* || productType == 4*/)
+                if(productType == 0)
                 {
                     products = await BasicProducts(productType, category, isBasic);
                     ViewBag.Operation = "BasicProducts";
@@ -87,7 +87,7 @@ namespace MVC.Controllers
             var query = _dbContext.Products
                                     .Where(p => p.ProductType == productType && p.Category == category && p.ToSite == true)
                                     .AsEnumerable()
-                                    .GroupBy(p => p.Name.Contains(" ") ? p.Name.Substring(0, p.Name.IndexOf(' ')) : p.Name)
+                                    .GroupBy(p => p.Category != "Столы" && p.Name.Contains(" ") ? p.Name.Substring(0, p.Name.IndexOf(' ')) : p.Name)
                                     .Select(g => g.First())
                                     .OrderBy(p=>p.Name);
 
@@ -201,17 +201,86 @@ namespace MVC.Controllers
                                                     FileName = p.FileName
                                                 })
                                                 .ToListAsync();
+
             if (filesAndDescriptions.Any())
             {
-                var fileNames = filesAndDescriptions.Select(f => f.FileName).ToList();
-                var nonEmptyDescription = filesAndDescriptions
-                                            .Select(f => f.Description)
-                                            .FirstOrDefault(d => !string.IsNullOrEmpty(d));
-                return Tuple.Create(nonEmptyDescription, fileNames);
+                string imagesFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "ClientsCatalogImages");
+
+                var validFiles = new List<string>();
+                foreach (var file in filesAndDescriptions)
+                {
+                    string fullPath = Path.Combine(imagesFolderPath, file.FileName);
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        validFiles.Add(file.FileName);
+                    }
+                }
+
+                if (validFiles.Any())
+                {
+                    var nonEmptyDescription = filesAndDescriptions
+                                                .Select(f => f.Description)
+                                                .FirstOrDefault(d => !string.IsNullOrEmpty(d));
+                    return Tuple.Create(nonEmptyDescription, validFiles);
+                }
             }
             return null;
-            
         }
+        //private async Task<Tuple<string, List<string>>> GetCategorySlider(string category)
+        //{
+        //    var filesAndDescriptions = await _dbContext.Products
+        //                                        .Where(p => p.Category == category && p.ProductType == 3 && p.CatSlider == true)
+        //                                        .Select(p => new
+        //                                        {
+        //                                            Description = p.Description,
+        //                                            FileName = p.FileName
+        //                                        })
+        //                                        .ToListAsync();
+
+        //    if (filesAndDescriptions.Any())
+        //    {
+        //        string baseUrl = "https://zovprofil.by/Images/ClientsCatalogImages/";
+
+        //        var validFiles = new List<string>();
+        //        foreach (var file in filesAndDescriptions)
+        //        {
+        //            string fileUrl = $"{baseUrl}{file.FileName}";
+
+        //            if (await FileExistsOnHttpAsync(fileUrl))
+        //            {
+        //                validFiles.Add(file.FileName);
+        //            }
+        //        }
+
+        //        if (validFiles.Any())
+        //        {
+        //            var nonEmptyDescription = filesAndDescriptions
+        //                                        .Select(f => f.Description)
+        //                                        .FirstOrDefault(d => !string.IsNullOrEmpty(d));
+        //            return Tuple.Create(nonEmptyDescription, validFiles);
+        //        }
+        //    }
+        //    return null;
+        //}
+
+        //private async Task<bool> FileExistsOnHttpAsync(string fileUrl)
+        //{
+        //    try
+        //    {
+        //        using (var httpClient = new HttpClient())
+        //        {
+        //            var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, fileUrl));
+        //            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        //        }
+        //    }
+        //    catch (HttpRequestException)
+        //    {
+        //        return false;
+        //    }
+        //}
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()

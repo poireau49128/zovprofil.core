@@ -51,8 +51,8 @@ main .container {
     margin: 10px;
     text-align: center;
     box-sizing: border-box;
-    max-width: 200px;
-    min-width: 180px;
+    max-width: 220px;
+    min-width: 200px;
     border: 1px solid #d9d9d9;
 }
     .block-img{

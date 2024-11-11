@@ -14,8 +14,8 @@
             <label for="@input_id" class="dropdown-name" style="position: relative; font-weight: normal; flex-direction: column">
                 <span style="width: 100%; display: flex; justify-content: space-between;">
                     <div style="display: flex; gap: 5px; align-items: center;">
-                        <img src="/img/@type.Key[2]"  style="width: 20px; height: 20px;">
-                        <a class="dropdown-toggle" asp-action="Production" asp-controller="Catalog" asp-route-productType=@type.Key[0] asp-route-productType=@type.Key[0] asp-route-categoryTranslit=@null>
+                        <img src="/img/@type.Key[2]" style="width: 20px; height: 20px;">
+                        <a class="dropdown-toggle" asp-action="Production" asp-controller="Catalog" asp-route-productTypeTranslit=@TransliterationHelper.ProdutTypeIntToString(int.Parse(type.Key[0])) asp-route-categoryTranslit=@null>
                             @type.Key[1]
                         </a>
                     </div>
@@ -27,7 +27,7 @@
                     @foreach (var category in type.Value)
                     {
                         TempData["isBasic"] = true;
-                        <a class="dropdown-item" asp-action="Production" asp-controller="Catalog" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(category) asp-route-productType=@type.Key[0]>@category</a>
+                        <a class="dropdown-item" asp-action="Production" asp-controller="Catalog" asp-route-categoryTranslit=@TransliterationHelper.ToLatin(category) asp-route-productTypeTranslit=@TransliterationHelper.ProdutTypeIntToString(int.Parse(type.Key[0]))>@category</a>
                     }
                     @if(type.Key[0] == "0"){
                         <hr style="width: 100%;"/>
